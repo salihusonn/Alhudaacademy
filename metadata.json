@@ -1,0 +1,6 @@
+{
+  "name": "Al-Huda Digital Academy",
+  "description": "A premier online school offering world-class digital skills training, guidance, and professional certification.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
