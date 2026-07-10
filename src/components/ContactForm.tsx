@@ -73,7 +73,12 @@ export default function ContactForm() {
         }
       } catch (fetchErr: any) {
         console.warn('Formspree direct fetch failed (possibly due to CORS or unverified Formspree email/ID):', fetchErr);
-        formspreeErrorMsg = 'Network Error or CORS Block. This happens when the target email has not been activated or verified on Formspree yet.';
+        formspreeErrorMsg = 'Network Error or CORS Block.';
+      }
+
+      // If submission fails, throw an error to show the exact error message required
+      if (!formspreeSuccess) {
+        throw new Error('Something went wrong. Please try again.');
       }
 
       // Also save to Supabase / Local Storage as fallback so inquiries are NEVER lost!
@@ -114,7 +119,7 @@ export default function ContactForm() {
       setIsSubmitted(true);
     } catch (err: any) {
       console.error('Contact form submission error:', err);
-      setDbError(err.message || 'An error occurred while submitting your inquiry. Please try again.');
+      setDbError('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -130,6 +135,11 @@ export default function ContactForm() {
     setDbError(null);
     setIsSubmitted(false);
     setLastFormspreeStatus(null);
+  };
+
+  const handleBackToHome = () => {
+    handleReset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -231,195 +241,197 @@ export default function ContactForm() {
           {/* Right Side: Interactive Inquiry Form */}
           <div className="lg:col-span-7 bg-slate-50/60 border border-slate-100/80 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-100/30 flex flex-col justify-center">
             
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Name field */}
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-600 uppercase">Your Name *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Halima Sani"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
-                    />
-                  </div>
-
-                  {/* Email field */}
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-600 uppercase">Email Address *</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="halima.sani@gmail.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
-                    />
-                  </div>
-                </div>
-
-                {/* Subject dropdown */}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Name field */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-600 uppercase">Subject Topic</label>
-                  <select
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald cursor-pointer"
-                  >
-                    <option value="General Inquiry">General Admissions Inquiry</option>
-                    <option value="Batch Tuitions">Batch 04 Fee Structure & Payment Plans</option>
-                    <option value="Corporate Scholarship">CSR / Corporate Scholarships Programs</option>
-                    <option value="Mentor Partnerships">Expert Instructor & Mentor Application</option>
-                  </select>
-                </div>
-
-                {/* Message block */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-600 uppercase">Write Your Query *</label>
-                  <textarea
+                  <label className="block text-xs font-bold text-slate-600 uppercase">Your Name *</label>
+                  <input
+                    type="text"
                     required
-                    placeholder="Describe what information you are seeking from the Al-Huda academy guides..."
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald resize-none"
-                  ></textarea>
+                    placeholder="Halima Sani"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
+                  />
                 </div>
 
-                {dbError && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-semibold">
-                    {dbError}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-brand-emerald hover:bg-brand-gold text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-2 cursor-pointer text-sm disabled:opacity-55"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending Message...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Send Inquiry Message</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-
-                {/* Formspree Settings Toggle */}
-                <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
-                  <span>
-                    Formspree Integration:{" "}
-                    <strong className={formspreeId.includes('@') ? "text-amber-600 bg-amber-50 px-2 py-0.5 rounded" : "text-teal-600 bg-teal-50 px-2 py-0.5 rounded"}>
-                      {formspreeId.includes('@') ? "Email Fallback" : "Connected (Form ID)"}
-                    </strong>
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setShowSettings(!showSettings)}
-                    className="text-teal-600 hover:text-teal-800 font-bold hover:underline cursor-pointer"
-                  >
-                    {showSettings ? "Hide Setup" : "Configure Formspree"}
-                  </button>
-                </div>
-
-                {showSettings && (
-                  <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-3 mt-4 animate-fade-in text-left shadow-sm">
-                    <div className="space-y-1">
-                      <h4 className="text-xs font-bold text-slate-700 uppercase">Connect to Formspree</h4>
-                      <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
-                        Enter your Formspree Form ID to receive immediate email alerts when visitors submit inquiries.
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        placeholder="e.g. xbjnqgdj"
-                        value={formspreeId}
-                        onChange={(e) => setFormspreeId(e.target.value.trim())}
-                        className="flex-1 bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-brand-emerald"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          localStorage.setItem('alhuda_formspree_id', formspreeId);
-                          setSavedSettingsMsg(true);
-                          setTimeout(() => setSavedSettingsMsg(false), 3000);
-                        }}
-                        className="bg-brand-emerald hover:bg-brand-gold text-white font-bold text-xs px-4 py-1.5 rounded-lg transition"
-                      >
-                        Save ID
-                      </button>
-                    </div>
-                    {savedSettingsMsg && (
-                      <p className="text-[11px] text-teal-600 font-bold">✓ Formspree Form ID saved locally!</p>
-                    )}
-                    <p className="text-[10px] text-slate-400 font-medium">
-                      Don't have an ID? Create a free form at <a href="https://formspree.io" target="_blank" rel="noreferrer" className="underline text-teal-600 font-bold">formspree.io</a> and copy the 8-character ID from the form's dashboard.
-                    </p>
-                  </div>
-                )}
-              </form>
-            ) : (
-              /* Success contact submission screen */
-              <div className="text-center py-10 max-w-sm mx-auto space-y-4 animate-fade-in">
-                <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald flex items-center justify-center mx-auto shadow-md">
-                  <Check className="w-8 h-8 stroke-[3]" />
-                </div>
-                <h3 className="font-heading font-extrabold text-slate-800 text-xl">Message Sent Successfully!</h3>
-                <p className="text-sm text-slate-500 leading-relaxed font-semibold">
-                  Thank you, <strong>{formData.name}</strong>. Your query regarding <strong>{formData.subject}</strong> has been logged.
-                </p>
-                <div className="bg-white border border-slate-100 p-4 rounded-xl text-xs text-slate-500 font-semibold text-center">
-                  A verification receipt has been routed to <strong>{formData.email}</strong>. Our counselors will call or write you within 12 business hours.
-                </div>
-
-                {lastFormspreeStatus && !lastFormspreeStatus.success && (
-                  <div className="bg-amber-50 border border-amber-200 text-left p-4 rounded-xl text-xs text-amber-800 space-y-1.5 font-medium mt-4">
-                    <p className="font-bold text-amber-900">💡 Formspree Integration Setup Notice:</p>
-                    <p>The inquiry was saved successfully to our local database, but the Formspree email notification did not send yet.</p>
-                    <p className="text-[10px] text-amber-700 font-semibold">
-                      Reason: {lastFormspreeStatus.errorMsg}
-                    </p>
-                    <p className="pt-1 text-[11px] text-slate-500">
-                      <strong>To activate email forwarding:</strong> Click the button below, go to Formspree, create a form, copy your <strong>Form ID</strong>, and paste it into the setup settings.
-                    </p>
-                  </div>
-                )}
-
-                <div className="pt-4 flex flex-col gap-2">
-                  <button
-                    onClick={handleReset}
-                    className="bg-brand-emerald hover:bg-brand-gold text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer w-full"
-                  >
-                    Send another message
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setShowSettings(true);
-                    }}
-                    className="text-teal-600 hover:text-teal-800 font-bold text-xs underline cursor-pointer w-full"
-                  >
-                    Adjust Formspree Connection Settings
-                  </button>
+                {/* Email field */}
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-600 uppercase">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="halima.sani@gmail.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
+                  />
                 </div>
               </div>
-            )}
+
+              {/* Subject dropdown */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-600 uppercase">Subject Topic</label>
+                <select
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald cursor-pointer"
+                >
+                  <option value="General Inquiry">General Admissions Inquiry</option>
+                  <option value="Batch Tuitions">Batch 04 Fee Structure & Payment Plans</option>
+                  <option value="Corporate Scholarship">CSR / Corporate Scholarships Programs</option>
+                  <option value="Mentor Partnerships">Expert Instructor & Mentor Application</option>
+                </select>
+              </div>
+
+              {/* Message block */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-600 uppercase">Write Your Query *</label>
+                <textarea
+                  required
+                  placeholder="Describe what information you are seeking from the Al-Huda academy guides..."
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald resize-none"
+                ></textarea>
+              </div>
+
+              {dbError && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-semibold animate-fade-in">
+                  {dbError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-brand-emerald hover:bg-brand-gold text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition duration-300 flex items-center justify-center gap-2 cursor-pointer text-sm disabled:opacity-55"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Sending message...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Send Inquiry Message</span>
+                    <Send className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+
+              {/* Formspree Settings Toggle */}
+              <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+                <span>
+                  Formspree Integration:{" "}
+                  <strong className={formspreeId.includes('@') ? "text-amber-600 bg-amber-50 px-2 py-0.5 rounded" : "text-teal-600 bg-teal-50 px-2 py-0.5 rounded"}>
+                    {formspreeId.includes('@') ? "Email Fallback" : "Connected (Form ID)"}
+                  </strong>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowSettings(!showSettings)}
+                  className="text-teal-600 hover:text-teal-800 font-bold hover:underline cursor-pointer"
+                >
+                  {showSettings ? "Hide Setup" : "Configure Formspree"}
+                </button>
+              </div>
+
+              {showSettings && (
+                <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-3 mt-4 animate-fade-in text-left shadow-sm">
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-bold text-slate-700 uppercase">Connect to Formspree</h4>
+                    <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
+                      Enter your Formspree Form ID to receive immediate email alerts when visitors submit inquiries.
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="e.g. xbjnqgdj"
+                      value={formspreeId}
+                      onChange={(e) => setFormspreeId(e.target.value.trim())}
+                      className="flex-1 bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-brand-emerald"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        localStorage.setItem('alhuda_formspree_id', formspreeId);
+                        setSavedSettingsMsg(true);
+                        setTimeout(() => setSavedSettingsMsg(false), 3000);
+                      }}
+                      className="bg-brand-emerald hover:bg-brand-gold text-white font-bold text-xs px-4 py-1.5 rounded-lg transition"
+                    >
+                      Save ID
+                    </button>
+                  </div>
+                  {savedSettingsMsg && (
+                    <p className="text-[11px] text-teal-600 font-bold">✓ Formspree Form ID saved locally!</p>
+                  )}
+                  <p className="text-[10px] text-slate-400 font-medium">
+                    Don't have an ID? Create a free form at <a href="https://formspree.io" target="_blank" rel="noreferrer" className="underline text-teal-600 font-bold">formspree.io</a> and copy the 8-character ID from the form's dashboard.
+                  </p>
+                </div>
+              )}
+            </form>
 
           </div>
 
         </div>
 
       </div>
+
+      {/* Centered Success Message Modal Overlay with Backdrop Blur */}
+      {isSubmitted && (
+        <div 
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+          onClick={handleReset}
+        >
+          <div 
+            className="bg-white rounded-3xl max-w-md w-full p-8 md:p-10 shadow-2xl border border-slate-100 text-center relative space-y-6 animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Elegant Check Badge with brand-emerald (Deep Green) and White colors */}
+            <div className="w-16 h-16 rounded-full bg-teal-50 border-2 border-brand-emerald text-brand-emerald flex items-center justify-center mx-auto shadow-md">
+              <Check className="w-8 h-8 stroke-[3]" />
+            </div>
+
+            {/* Success Message Header */}
+            <h3 className="font-heading font-extrabold text-slate-800 text-xl sm:text-2xl leading-snug">
+              ✅ Message Sent Successfully!
+            </h3>
+
+            {/* Custom Success Body Text */}
+            <div className="space-y-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+              <p>
+                Thank you, <strong className="text-slate-800 font-extrabold">{formData.name}</strong>! Your message has been received successfully.
+              </p>
+              <p>
+                Our team will review your inquiry and contact you within 12 business hours via the email address or phone number you provided.
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-col gap-2">
+              <button
+                onClick={handleReset}
+                className="w-full bg-brand-emerald hover:bg-brand-emerald-light text-white font-bold text-xs py-3 px-6 rounded-xl transition duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2"
+              >
+                Send Another Message
+              </button>
+              
+              <button
+                onClick={handleBackToHome}
+                className="w-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs py-3 px-6 rounded-xl transition duration-300 shadow-sm cursor-pointer"
+              >
+                Back to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
