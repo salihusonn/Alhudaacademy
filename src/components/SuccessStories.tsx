@@ -5,20 +5,24 @@
 
 import React, { useState } from 'react';
 import { Star, Quote, Sparkles, ChevronLeft, ChevronRight, Award } from 'lucide-react';
-import { TESTIMONIALS } from '../data/academyData';
+import { useLanguage } from '../lib/LanguageContext';
+import { TESTIMONIALS_EN, TESTIMONIALS_HA } from '../data/translations';
 
 export default function SuccessStories() {
+  const { language } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const testimonials = language === 'en' ? TESTIMONIALS_EN : TESTIMONIALS_HA;
+
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? TESTIMONIALS.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === TESTIMONIALS.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
   };
 
-  const currentStory = TESTIMONIALS[currentIndex];
+  const currentStory = testimonials[currentIndex];
 
   return (
     <section id="stories" className="py-20 md:py-28 bg-white relative">
@@ -30,13 +34,24 @@ export default function SuccessStories() {
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
             <Sparkles className="w-3.5 h-3.5 text-brand-gold-light" />
-            <span>Graduate Success Spotlight</span>
+            <span>{language === 'en' ? 'Graduate Success Spotlight' : 'Hasken Nasarar Karatu'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
-            From Al-Huda Students to <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Global Professionals</span>
+            {language === 'en' ? (
+              <>
+                From Al-Huda Students to <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Global Professionals</span>
+              </>
+            ) : (
+              <>
+                Daga Dalibai Zuwa <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Kwararrun Duniya</span>
+              </>
+            )}
           </h2>
           <p className="text-sm sm:text-base text-slate-500 font-medium">
-            Read inspiring stories of real individuals who took control of their financial destinies by acquiring digital skills through our online bootcamps.
+            {language === 'en'
+              ? 'Read inspiring stories of real individuals who took control of their financial destinies by acquiring digital skills through our online bootcamps.'
+              : 'Karanta labarai masu ban sha\'awa na matasan da suka dauki iko da makomarsu ta kudi ta hanyar samun kwarewar fasahar zamani.'
+            }
           </p>
         </div>
 
@@ -87,10 +102,13 @@ export default function SuccessStories() {
               <div className="border-t border-slate-100/80 pt-4 flex flex-wrap items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-1.5 text-slate-500 font-semibold">
                   <Award className="w-4 h-4 text-brand-gold" />
-                  <span>Completed: <strong className="text-slate-700">{currentStory.courseCompleted}</strong></span>
+                  <span>
+                    {language === 'en' ? 'Completed: ' : 'Ya Kammala: '}
+                    <strong className="text-slate-700">{currentStory.courseCompleted}</strong>
+                  </span>
                 </div>
                 <span className="bg-white border border-slate-200 text-slate-400 text-[10px] font-bold px-2 py-0.5 rounded-lg">
-                  Graduate of {currentStory.year}
+                  {language === 'en' ? `Graduate of ${currentStory.year}` : `Dalibin Shekarar ${currentStory.year}`}
                 </span>
               </div>
             </div>
@@ -121,15 +139,21 @@ export default function SuccessStories() {
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <div className="bg-slate-50 border border-slate-100/70 p-6 rounded-2xl text-center space-y-1">
             <span className="block text-2xl font-heading font-extrabold text-slate-800">$1.2M+ USD</span>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Earned by Freelance Alumni</p>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+              {language === 'en' ? 'Earned by Freelance Alumni' : 'Kudin Da Dalibai Masu Zaman Kansu Suka Samu'}
+            </p>
           </div>
           <div className="bg-slate-50 border border-slate-100/70 p-6 rounded-2xl text-center space-y-1">
             <span className="block text-2xl font-heading font-extrabold text-slate-800">92%</span>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Employment or Gig Launch Rate</p>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+              {language === 'en' ? 'Employment or Gig Launch Rate' : 'Yawan Samun Aiki Ko Kwangila'}
+            </p>
           </div>
           <div className="bg-slate-50 border border-slate-100/70 p-6 rounded-2xl text-center space-y-1">
             <span className="block text-2xl font-heading font-extrabold text-slate-800">4.8 / 5</span>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Average Graduate Score rating</p>
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+              {language === 'en' ? 'Average Graduate Score rating' : 'Matsakaicin Kimar Dalibanda Suka Gama'}
+            </p>
           </div>
         </div>
 

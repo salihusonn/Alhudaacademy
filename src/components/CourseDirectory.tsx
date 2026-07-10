@@ -5,15 +5,17 @@
 
 import React, { useState } from 'react';
 import { Search, Star, Clock, BookOpen, User, ArrowRight, X, Check, Award, Sparkles, Send } from 'lucide-react';
-import { COURSES, CURRENT_BATCH } from '../data/academyData';
+import { CURRENT_BATCH } from '../data/academyData';
 import { Course } from '../types';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface CourseDirectoryProps {
   onEnrollClick: (courseId?: string) => void;
 }
 
 export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps) {
+  const { courses, language, t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -30,14 +32,14 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
   const [enrollSuccess, setEnrollSuccess] = useState<boolean>(false);
 
   const categories = [
-    { label: 'All Fields', value: 'all' },
-    { label: 'Programming & Tech', value: 'programming' },
-    { label: 'Creative Design', value: 'design' },
-    { label: 'Growth Marketing', value: 'marketing' },
-    { label: 'Digital Business', value: 'business' },
+    { label: language === 'en' ? 'All Fields' : 'Duk Fannoni', value: 'all' },
+    { label: language === 'en' ? 'AI & Tech' : 'AI & Fasaha', value: 'programming' },
+    { label: language === 'en' ? 'Creative Design' : 'Zane da Waya', value: 'design' },
+    { label: language === 'en' ? 'Growth Marketing' : 'Tallan Dijital', value: 'marketing' },
+    { label: language === 'en' ? 'Digital Business' : 'Saukaka Kasuwanci', value: 'business' },
   ];
 
-  const filteredCourses = COURSES.filter((course) => {
+  const filteredCourses = courses.filter((course) => {
     const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
     const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -48,7 +50,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
   const handleEnrollSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.email || !formData.phone) {
-      alert('Please fill out all required fields.');
+      alert(language === 'en' ? 'Please fill out all required fields.' : 'Da fatan za a cika dukkan wuraren da ake bukata.');
       return;
     }
 
@@ -114,13 +116,24 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
               <Sparkles className="w-3.5 h-3.5 text-brand-gold-light" />
-              <span>Explore Course Directory</span>
+              <span>{language === 'en' ? 'Explore Course Directory' : 'Katalof na Kwasa-kwasai'}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight leading-none">
-              In-Demand Skills for <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">High-Earning Careers</span>
+              {language === 'en' ? (
+                <>
+                  In-Demand Skills for <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">High-Earning Careers</span>
+                </>
+              ) : (
+                <>
+                  Kwarewar Fasaha don <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Sami Kudi Masu Kyau</span>
+                </>
+              )}
             </h2>
             <p className="text-sm sm:text-base text-slate-500 font-medium">
-              Carefully curated bootcamps designed to take you from a curious novice to a premium professional. Select a path below to begin.
+              {language === 'en'
+                ? 'Carefully curated bootcamps designed to take you from a curious novice to a premium professional. Select a path below to begin.'
+                : 'Darussa na kwarai da aka tsara don tafiyar da kai daga matakin farko zuwa matakin gwaninta. Zabi darasi a kasa don farawa.'
+              }
             </p>
           </div>
 
@@ -128,7 +141,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
           <div className="relative w-full md:max-w-xs shrink-0">
             <input
               type="text"
-              placeholder="Search courses or tools..."
+              placeholder={language === 'en' ? 'Search courses or tools...' : 'Nemi kwasa-kwasai ko kayan aiki...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-emerald transition shadow-sm"
@@ -174,13 +187,25 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   
                   {/* Category Pill */}
                   <span className="absolute top-4 left-4 bg-teal-800 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    {course.category === 'programming' ? 'Coding' : course.category}
+                    {course.category === 'programming' 
+                      ? (language === 'en' ? 'AI & Tech' : 'AI & Fasaha') 
+                      : course.category === 'design' 
+                      ? (language === 'en' ? 'Creative Design' : 'Zane da Waya')
+                      : course.category === 'marketing'
+                      ? (language === 'en' ? 'Growth Marketing' : 'Tallan Dijital')
+                      : (language === 'en' ? 'Digital Business' : 'Saukaka Kasuwanci')}
                   </span>
 
                   {/* Level Tag */}
                   <span className="absolute bottom-4 left-4 text-xs font-bold text-white flex items-center gap-1">
                     <Award className="w-4 h-4 text-brand-gold-light" />
-                    <span>{course.level}</span>
+                    <span>
+                      {course.level === 'Beginner' 
+                        ? (language === 'en' ? 'Beginner' : 'Masu Fara Koyo')
+                        : course.level === 'Intermediate'
+                        ? (language === 'en' ? 'Intermediate' : 'Matsakaici')
+                        : (language === 'en' ? 'All Levels' : 'Kowane Mataki')}
+                    </span>
                   </span>
                 </div>
 
@@ -192,9 +217,9 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                       <div className="flex items-center gap-1.5">
                         <Star className="w-4 h-4 fill-brand-gold-light text-brand-gold-light" />
                         <span className="text-slate-700 font-extrabold">{course.rating}</span>
-                        <span>({course.reviewsCount} reviews)</span>
+                        <span>({course.reviewsCount} {language === 'en' ? 'reviews' : 'ra\'ayoyi'})</span>
                       </div>
-                      <span>{course.studentsCount.toLocaleString()}+ Enrolled</span>
+                      <span>{course.studentsCount.toLocaleString()}+ {language === 'en' ? 'Enrolled' : 'Rajista'}</span>
                     </div>
 
                     <h3 className="font-heading font-extrabold text-slate-800 text-lg leading-snug group-hover:text-brand-emerald transition duration-200">
@@ -214,7 +239,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     </div>
                     <div className="flex items-center gap-1">
                       <BookOpen className="w-4 h-4 text-slate-400" />
-                      <span>{course.lessons} Lectures</span>
+                      <span>{course.lessons} {language === 'en' ? 'Lectures' : 'Darussa'}</span>
                     </div>
                   </div>
 
@@ -227,7 +252,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     ))}
                     {course.tools.length > 3 && (
                       <span className="text-slate-400 text-[9px] font-bold self-center">
-                        +{course.tools.length - 3} more
+                        +{course.tools.length - 3} {language === 'en' ? 'more' : 'wasu'}
                       </span>
                     )}
                   </div>
@@ -242,14 +267,14 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     }}
                     className="flex-1 bg-slate-50 text-slate-700 hover:bg-slate-100 font-bold text-xs py-3 px-2 rounded-xl border border-slate-200 transition duration-300 flex items-center justify-center gap-1 cursor-pointer"
                   >
-                    <span>Syllabus</span>
+                    <span>{language === 'en' ? 'Syllabus' : 'Tsarin Karatu'}</span>
                   </button>
                   <button
                     onClick={() => onEnrollClick(course.id)}
                     className="flex-1 bg-brand-emerald hover:bg-teal-900 text-white font-bold text-xs py-3 px-2 rounded-xl transition duration-300 flex items-center justify-center gap-1 cursor-pointer"
                     id={`enroll-btn-${course.id}`}
                   >
-                    <span>Enroll Now</span>
+                    <span>{language === 'en' ? 'Enroll Now' : 'Yi Rajista'}</span>
                   </button>
                 </div>
               </div>
@@ -257,9 +282,14 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-slate-100 p-12 text-center max-w-md mx-auto space-y-4 shadow-sm">
-            <h3 className="font-heading font-extrabold text-slate-800 text-lg">No courses found</h3>
+            <h3 className="font-heading font-extrabold text-slate-800 text-lg">
+              {language === 'en' ? 'No courses found' : 'Babu darussan da aka samu'}
+            </h3>
             <p className="text-sm text-slate-500">
-              We couldn't find any courses matching your search "{searchQuery}". Try filtering by a different category or refining your keyword.
+              {language === 'en'
+                ? `We couldn't find any courses matching your search "${searchQuery}". Try filtering by a different category or refining your keyword.`
+                : `Ba mu sami wani kwas da ya dace da bincikenku na "${searchQuery}" ba. Da fatan za a sake bincikawa da wani kalaman.`
+              }
             </p>
             <button
               onClick={() => {
@@ -268,7 +298,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
               }}
               className="bg-brand-emerald hover:bg-teal-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition cursor-pointer"
             >
-              Reset All Filters
+              {language === 'en' ? 'Reset All Filters' : 'Sake Setawa'}
             </button>
           </div>
         )}
@@ -301,7 +331,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
 
               <div className="absolute bottom-4 left-6 right-6">
                 <span className="bg-brand-gold text-white text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                  {selectedCourse.category} path
+                  {selectedCourse.category} {language === 'en' ? 'path' : 'fanni'}
                 </span>
                 <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-800 leading-tight mt-2 drop-shadow-sm">
                   {selectedCourse.title}
@@ -318,22 +348,28 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   {/* Quick stats panel */}
                   <div className="grid grid-cols-3 gap-4 bg-slate-50 rounded-2xl p-4 text-center border border-slate-100">
                     <div>
-                      <span className="block text-[10px] font-bold text-slate-400 uppercase">Duration</span>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase">{language === 'en' ? 'Duration' : 'Tsawon Lokaci'}</span>
                       <strong className="text-slate-700 text-sm">{selectedCourse.duration}</strong>
                     </div>
                     <div>
-                      <span className="block text-[10px] font-bold text-slate-400 uppercase">Lectures</span>
-                      <strong className="text-slate-700 text-sm">{selectedCourse.lessons} Modules</strong>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase">{language === 'en' ? 'Lectures' : 'Darussa'}</span>
+                      <strong className="text-slate-700 text-sm">{selectedCourse.lessons} {language === 'en' ? 'Modules' : 'Rukuni'}</strong>
                     </div>
                     <div>
-                      <span className="block text-[10px] font-bold text-slate-400 uppercase">Skill Level</span>
-                      <strong className="text-slate-700 text-sm">{selectedCourse.level}</strong>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase">{language === 'en' ? 'Skill Level' : 'Kwarewa'}</span>
+                      <strong className="text-slate-700 text-sm">
+                        {selectedCourse.level === 'Beginner' 
+                          ? (language === 'en' ? 'Beginner' : 'Masu Fara Koyo')
+                          : selectedCourse.level === 'Intermediate'
+                          ? (language === 'en' ? 'Intermediate' : 'Matsakaici')
+                          : (language === 'en' ? 'All Levels' : 'Kowane Mataki')}
+                      </strong>
                     </div>
                   </div>
 
                   {/* Detailed summary */}
                   <div className="space-y-2">
-                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">Course Overview</h4>
+                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">{language === 'en' ? 'Course Overview' : 'Bayanin Darasi'}</h4>
                     <p className="text-sm text-slate-600 leading-relaxed font-medium">
                       {selectedCourse.longDescription}
                     </p>
@@ -343,7 +379,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   <div className="space-y-3 bg-teal-50/40 border border-teal-50 p-5 rounded-2xl">
                     <h4 className="font-heading font-extrabold text-brand-emerald text-sm flex items-center gap-1.5">
                       <Award className="w-4 h-4 text-brand-gold-light" />
-                      <span>What you will be able to do:</span>
+                      <span>{language === 'en' ? 'What you will be able to do:' : 'Abubuwan da zaka iya yi:'}</span>
                     </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600 font-semibold">
                       {selectedCourse.outcomes.map((outcome, idx) => (
@@ -357,7 +393,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
 
                   {/* Curriculum Accordion/List */}
                   <div className="space-y-3">
-                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">Syllabus Curriculum Breakdown</h4>
+                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">{language === 'en' ? 'Syllabus Curriculum Breakdown' : 'Cikakken Shirin Karatu'}</h4>
                     <div className="space-y-2.5">
                       {selectedCourse.curriculum.map((module, idx) => (
                         <div key={idx} className="flex gap-3 bg-slate-50 border border-slate-100 p-3 rounded-xl items-center">
@@ -372,7 +408,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
 
                   {/* Tools to Master tags */}
                   <div className="space-y-2">
-                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">Professional Tools You Will Master</h4>
+                    <h4 className="font-heading font-extrabold text-slate-800 text-sm">{language === 'en' ? 'Professional Tools You Will Master' : 'Kayan Aikin Da Zaka Kware Akai'}</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedCourse.tools.map((tool, idx) => (
                         <span key={idx} className="bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-xl">
@@ -391,7 +427,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                       className="w-14 h-14 rounded-full object-cover border border-teal-100 shadow-sm"
                     />
                     <div className="space-y-1">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Instructor & Mentor</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{language === 'en' ? 'Instructor & Mentor' : 'Malami & Mai Jagora'}</span>
                       <h4 className="font-heading font-extrabold text-slate-800 text-sm">{selectedCourse.instructor.name}</h4>
                       <p className="text-xs text-brand-emerald font-bold">{selectedCourse.instructor.role}</p>
                       <p className="text-xs text-slate-500 leading-relaxed font-medium pt-1">
@@ -406,19 +442,24 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   {!enrollSuccess ? (
                     <form onSubmit={handleEnrollSubmit} className="space-y-5">
                       <div className="text-center max-w-md mx-auto space-y-2 pb-2">
-                        <h4 className="font-heading font-extrabold text-slate-800 text-lg">Apply for {selectedCourse.title}</h4>
+                        <h4 className="font-heading font-extrabold text-slate-800 text-lg">
+                          {language === 'en' ? `Apply for ${selectedCourse.title}` : `Nemi Gurbin ${selectedCourse.title}`}
+                        </h4>
                         <p className="text-xs text-slate-500 font-medium">
-                          Submit your scholarship registration form for Batch 0{CURRENT_BATCH.batchNumber}. Our admission guides will review your profile.
+                          {language === 'en'
+                            ? `Submit your scholarship registration form for Batch 0${CURRENT_BATCH.batchNumber}. Our admission guides will review your profile.`
+                            : `Aika takardar neman gurbin tallafin karatu na Rukuni na 0${CURRENT_BATCH.batchNumber}. Ma'aikatanmu zasu duba bayanan ku.`
+                          }
                         </p>
                       </div>
 
                       {/* Full Name */}
                       <div className="space-y-1.5">
-                        <label className="block text-xs font-bold text-slate-600 uppercase">Full Name *</label>
+                        <label className="block text-xs font-bold text-slate-600 uppercase">{language === 'en' ? 'Full Name *' : 'Cikakken Suna *'}</label>
                         <input
                           type="text"
                           required
-                          placeholder="Halima Sani"
+                          placeholder={language === 'en' ? 'Yusuf Ibrahim' : 'Misali: Yusuf Ibrahim'}
                           value={formData.fullName}
                           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                           className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
@@ -428,18 +469,18 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                       {/* Email and Phone */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                          <label className="block text-xs font-bold text-slate-600 uppercase">Email Address *</label>
+                          <label className="block text-xs font-bold text-slate-600 uppercase">{language === 'en' ? 'Email Address *' : 'Adireshin Imel *'}</label>
                           <input
                             type="email"
                             required
-                            placeholder="halima.sani@gmail.com"
+                            placeholder="yusuf.ibrahim@gmail.com"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="block text-xs font-bold text-slate-600 uppercase">Phone Number (WhatsApp) *</label>
+                          <label className="block text-xs font-bold text-slate-600 uppercase">{language === 'en' ? 'Phone Number (WhatsApp) *' : 'Lambar Waya (WhatsApp) *'}</label>
                           <input
                             type="tel"
                             required
@@ -453,23 +494,23 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
 
                       {/* Prior Experience Level */}
                       <div className="space-y-1.5">
-                        <label className="block text-xs font-bold text-slate-600 uppercase">Prior Tech Experience</label>
+                        <label className="block text-xs font-bold text-slate-600 uppercase">{language === 'en' ? 'Prior Tech Experience' : 'Kwarewar Fasaha Ta Baya'}</label>
                         <select
                           value={formData.experience}
                           onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                           className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald cursor-pointer"
                         >
-                          <option value="Beginner">Absolute Beginner (Never coded/designed)</option>
-                          <option value="Intermediate">Intermediate (Have basic theoretical knowledge)</option>
-                          <option value="Advanced">Advanced (Working professional seeking specialized skills)</option>
+                          <option value="Beginner">{language === 'en' ? 'Absolute Beginner (Never coded/designed)' : 'Sabo Gaba Daya (Ban taba yi ba)'}</option>
+                          <option value="Intermediate">{language === 'en' ? 'Intermediate (Have basic theoretical knowledge)' : 'Matsakaici (Ina da ilimin asali)'}</option>
+                          <option value="Advanced">{language === 'en' ? 'Advanced (Working professional seeking specialized skills)' : 'Babban Gwani (Ina aiki ina son karin ilimi)'}</option>
                         </select>
                       </div>
 
                       {/* Motivation Statement */}
                       <div className="space-y-1.5">
-                        <label className="block text-xs font-bold text-slate-600 uppercase">Why do you want to learn this skill? (Optional)</label>
+                        <label className="block text-xs font-bold text-slate-600 uppercase">{language === 'en' ? 'Why do you want to learn this skill? (Optional)' : 'Me yasa kake son koyon wannan fasaha? (Na Zabi)'}</label>
                         <textarea
-                          placeholder="Describe your career goals and what you hope to achieve with Al-Huda Academy..."
+                          placeholder={language === 'en' ? 'Describe your career goals and what you hope to achieve with Al-Huda Academy...' : 'Bayyana burinka da abinda kake son cimmawa tare da Al-Huda Academy...'}
                           rows={3}
                           value={formData.motivation}
                           onChange={(e) => setFormData({ ...formData, motivation: e.target.value })}
@@ -483,13 +524,13 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                           onClick={() => setEnrollMode(false)}
                           className="flex-1 border border-slate-200 text-slate-600 font-bold py-3 px-4 rounded-xl hover:bg-slate-50 transition cursor-pointer text-center text-sm"
                         >
-                          Back to Details
+                          {language === 'en' ? 'Back to Details' : 'Koma Bayanin Baya'}
                         </button>
                         <button
                           type="submit"
                           className="flex-1 bg-brand-emerald text-white font-bold py-3 px-4 rounded-xl shadow-md hover:bg-brand-gold transition cursor-pointer flex items-center justify-center gap-2 text-sm"
                         >
-                          <span>Submit Application</span>
+                          <span>{language === 'en' ? 'Submit Application' : 'Aika Rajista'}</span>
                           <Send className="w-4 h-4" />
                         </button>
                       </div>
@@ -500,15 +541,30 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                       <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald flex items-center justify-center mx-auto shadow-md">
                         <Check className="w-8 h-8 stroke-[3]" />
                       </div>
-                      <h4 className="font-heading font-extrabold text-slate-800 text-xl">Application Received Successfully!</h4>
+                      <h4 className="font-heading font-extrabold text-slate-800 text-xl">
+                        {language === 'en' ? 'Application Received Successfully!' : 'An Karbi Rajistarka Cikin Nasara!'}
+                      </h4>
                       <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                        Alhamdulillah, <strong>{formData.fullName}</strong>! We have registered your inquiry application for the <strong>{selectedCourse.title}</strong> bootcamp.
+                        {language === 'en' 
+                          ? <>Alhamdulillah, <strong>{formData.fullName}</strong>! We have registered your inquiry application for the <strong>{selectedCourse.title}</strong> bootcamp.</>
+                          : <>Alhamdulillah, <strong>{formData.fullName}</strong>! Mun yi nasarar rijistar takardarka ta kwas din <strong>{selectedCourse.title}</strong>.</>
+                        }
                       </p>
                       
                       <div className="bg-slate-50 border border-slate-100 p-4 rounded-2xl text-left text-xs text-slate-600 space-y-2 mt-4">
-                        <p className="font-bold text-slate-700">Next Steps:</p>
-                        <p>1. Check your email (<strong>{formData.email}</strong>) for a confirmation receipt containing curriculum material and pre-requirements.</p>
-                        <p>2. Keep an eye on WhatsApp (<strong>{formData.phone}</strong>) for invitation to the official Batch 0{CURRENT_BATCH.batchNumber} group.</p>
+                        <p className="font-bold text-slate-700">{language === 'en' ? 'Next Steps:' : 'Matakai Na Gaba:'}</p>
+                        <p>
+                          {language === 'en'
+                            ? <>1. Check your email (<strong>{formData.email}</strong>) for a confirmation receipt containing curriculum material and pre-requirements.</>
+                            : <>1. Duba imel dinka (<strong>{formData.email}</strong>) don tabbatar da samun sakonmo da abubuwan da ake bukata.</>
+                          }
+                        </p>
+                        <p>
+                          {language === 'en'
+                            ? <>2. Keep an eye on WhatsApp (<strong>{formData.phone}</strong>) for invitation to the official Batch 0{CURRENT_BATCH.batchNumber} group.</>
+                            : <>2. Kasance da jiran sakon WhatsApp (<strong>{formData.phone}</strong>) don shiga rukunin kwas na Rukuni 0{CURRENT_BATCH.batchNumber}.</>
+                          }
+                        </p>
                       </div>
 
                       <button
@@ -516,7 +572,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                         onClick={closeModals}
                         className="bg-brand-emerald hover:bg-brand-gold text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer mt-4"
                       >
-                        Got it, thank you!
+                        {language === 'en' ? 'Got it, thank you!' : 'To madalla, na gode!'}
                       </button>
                     </div>
                   )}
@@ -529,7 +585,9 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
             {!enrollSuccess && (
               <div className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <span className="text-xs text-slate-400 font-bold">
-                  {!enrollMode ? 'Interested in this career path?' : 'Read curriculum guidelines first'}
+                  {!enrollMode 
+                    ? (language === 'en' ? 'Interested in this career path?' : 'Kuna sha\'awar wannan fanni?') 
+                    : (language === 'en' ? 'Read curriculum guidelines first' : 'Karanta shirin karatu tukunna')}
                 </span>
                 
                 {!enrollMode ? (
@@ -541,7 +599,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     }}
                     className="w-full sm:w-auto bg-brand-emerald text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md hover:bg-brand-gold transition cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <span>Proceed to Application</span>
+                    <span>{language === 'en' ? 'Proceed to Application' : 'Ci gaba da Rajista'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
@@ -549,7 +607,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     onClick={() => setEnrollMode(false)}
                     className="w-full sm:w-auto border border-brand-emerald text-brand-emerald font-bold text-sm px-6 py-3 rounded-xl hover:bg-teal-50 transition cursor-pointer"
                   >
-                    View Curriculum Detail
+                    {language === 'en' ? 'View Curriculum Detail' : 'Duba Cikakken Shirin Karatu'}
                   </button>
                 )}
               </div>

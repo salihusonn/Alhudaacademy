@@ -5,9 +5,11 @@
 
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown, ChevronUp, Search, Sparkles } from 'lucide-react';
-import { FAQS } from '../data/academyData';
+import { useLanguage } from '../lib/LanguageContext';
+import { FAQS_EN, FAQS_HA } from '../data/translations';
 
 export default function FAQSection() {
+  const { language } = useLanguage();
   const [openIndex, setOpenIndex] = useState<string | null>('faq1');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -17,14 +19,16 @@ export default function FAQSection() {
   };
 
   const categories = [
-    { label: 'All FAQs', value: 'all' },
-    { label: 'General Info', value: 'general' },
-    { label: 'Admissions & Pricing', value: 'admissions' },
-    { label: 'Certificates', value: 'certificates' },
-    { label: 'Technical Details', value: 'technical' },
+    { label: language === 'en' ? 'All FAQs' : 'Duk Tambayoyi', value: 'all' },
+    { label: language === 'en' ? 'General Info' : 'Bayanai na Gari', value: 'general' },
+    { label: language === 'en' ? 'Admissions & Pricing' : 'Rajista & Kudin Makaranta', value: 'admissions' },
+    { label: language === 'en' ? 'Certificates' : 'Shaidun Karatu', value: 'certificates' },
+    { label: language === 'en' ? 'Technical Details' : 'Kayan Aiki na Fasaha', value: 'technical' },
   ];
 
-  const filteredFaqs = FAQS.filter((faq) => {
+  const faqs = language === 'en' ? FAQS_EN : FAQS_HA;
+
+  const filteredFaqs = faqs.filter((faq) => {
     const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
     const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
@@ -41,13 +45,24 @@ export default function FAQSection() {
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
             <HelpCircle className="w-3.5 h-3.5 text-brand-gold-light" />
-            <span>Answers to your Queries</span>
+            <span>{language === 'en' ? 'Answers to your Queries' : 'Amsoshin Tambayoyinku'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
-            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Questions</span>
+            {language === 'en' ? (
+              <>
+                Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Questions</span>
+              </>
+            ) : (
+              <>
+                Tambayoyin da Ake <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Yawan Yi</span>
+              </>
+            )}
           </h2>
           <p className="text-sm sm:text-base text-slate-500 font-medium">
-            Find answers to common questions about admissions, hardware, certificates, and our online guided curriculum format.
+            {language === 'en'
+              ? 'Find answers to common questions about admissions, hardware, certificates, and our online guided curriculum format.'
+              : 'Nemi amsoshi cikin sauri ga tambayoyin gama gari game da shiga karatu, kayan aiki, takaddun shaida, da tsarin karatunmu.'
+            }
           </p>
         </div>
 
@@ -74,7 +89,7 @@ export default function FAQSection() {
           <div className="relative w-full sm:max-w-xs shrink-0">
             <input
               type="text"
-              placeholder="Search FAQs..."
+              placeholder={language === 'en' ? 'Search FAQs...' : 'Nemi Tambayoyi...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-brand-emerald transition"
@@ -118,9 +133,14 @@ export default function FAQSection() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-slate-100 p-8 text-center max-w-sm mx-auto space-y-3">
-            <h4 className="font-heading font-extrabold text-slate-800 text-sm">No FAQs found</h4>
+            <h4 className="font-heading font-extrabold text-slate-800 text-sm">
+              {language === 'en' ? 'No FAQs found' : 'Babu tambayar da aka samu'}
+            </h4>
             <p className="text-xs text-slate-400 font-medium">
-              We couldn't find any FAQs matching your query "{searchQuery}". Try refiltering categories.
+              {language === 'en' 
+                ? `We couldn't find any FAQs matching your query "${searchQuery}". Try refiltering categories.`
+                : `Ba mu sami tambayar da ta dace da bincikenku ba "${searchQuery}". Gwada sake tace rukuni.`
+              }
             </p>
           </div>
         )}
@@ -128,7 +148,7 @@ export default function FAQSection() {
         {/* Callout Footer */}
         <div className="mt-12 text-center p-6 bg-white border border-slate-100 rounded-2xl max-w-lg mx-auto shadow-sm space-y-2.5">
           <p className="text-xs sm:text-sm text-slate-500 font-semibold">
-            Still have questions that are not answered here?
+            {language === 'en' ? 'Still have questions that are not answered here?' : 'Kuna da sauran tambayoyin da ba a amsa muku a nan ba?'}
           </p>
           <button
             onClick={() => {
@@ -137,7 +157,7 @@ export default function FAQSection() {
             }}
             className="text-xs font-bold text-brand-emerald hover:text-teal-800 underline cursor-pointer"
           >
-            Ask our admission counselors directly via our query form
+            {language === 'en' ? 'Ask our admission counselors directly via our query form' : 'Tambayi masu jagorantar rajistarmu kai tsaye ta hanyar fom dinmu'}
           </button>
         </div>
 

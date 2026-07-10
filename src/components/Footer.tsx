@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { GraduationCap, Mail, Sparkles, Send, Check, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { useLanguage } from '../lib/LanguageContext';
 import AlHudaLogo from './AlHudaLogo';
 
 interface FooterProps {
@@ -12,6 +13,7 @@ interface FooterProps {
 }
 
 export default function Footer({ onNavigate }: FooterProps) {
+  const { language } = useLanguage();
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -24,20 +26,20 @@ export default function Footer({ onNavigate }: FooterProps) {
   };
 
   const learningPaths = [
-    { label: 'Web Development', id: 'courses' },
-    { label: 'Creative Design', id: 'courses' },
-    { label: 'Growth Marketing', id: 'courses' },
-    { label: 'Freelancing Mastery', id: 'courses' },
-    { label: 'Python & Data Labs', id: 'courses' },
+    { label: language === 'en' ? 'Web Development' : 'Ginin Yanar Gizo', id: 'courses' },
+    { label: language === 'en' ? 'Creative Design' : 'Zane na Zamani', id: 'courses' },
+    { label: language === 'en' ? 'Growth Marketing' : 'Tallace-tallace na Dijital', id: 'courses' },
+    { label: language === 'en' ? 'Freelancing Mastery' : 'Kwarewar Freelancing', id: 'courses' },
+    { label: language === 'en' ? 'Python & Data Labs' : 'Python & Ilimin Bayanai', id: 'courses' },
   ];
 
   const quickLinks = [
-    { label: 'Explore Courses', id: 'courses' },
-    { label: 'Admissions FAQ', id: 'faq' },
-    { label: 'Success Spotlight', id: 'stories' },
-    { label: 'How It Works', id: 'how-it-works' },
-    { label: 'Meet Our Mentors', id: 'mentors' },
-    { label: 'Inquiry Form', id: 'contact' },
+    { label: language === 'en' ? 'Explore Courses' : 'Duba Kwasa-kwasai', id: 'courses' },
+    { label: language === 'en' ? 'Admissions FAQ' : 'Tambayoyin Shiga Makaranta', id: 'faq' },
+    { label: language === 'en' ? 'Success Spotlight' : 'Labaran Nasara', id: 'stories' },
+    { label: language === 'en' ? 'How It Works' : 'Yadda Yake Aiki', id: 'how-it-works' },
+    { label: language === 'en' ? 'Meet Our Mentors' : 'Hadu da Malamanmu', id: 'mentors' },
+    { label: language === 'en' ? 'Inquiry Form' : 'Fom Din Tambayoyi', id: 'contact' },
   ];
 
   return (
@@ -49,13 +51,16 @@ export default function Footer({ onNavigate }: FooterProps) {
           <div className="lg:col-span-6 space-y-2">
             <span className="text-brand-gold-light text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 justify-center lg:justify-start">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Stay Updated with Al-Huda</span>
+              <span>{language === 'en' ? 'Stay Updated with Al-Huda' : 'Kasance da Al-Huda'}</span>
             </span>
             <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-white text-center lg:text-left">
-              Subscribe to our Admissions Newsletter
+              {language === 'en' ? 'Subscribe to our Admissions Newsletter' : 'Yi Rajistar Jaridar Mu Ta Shiga Makaranta'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 text-center lg:text-left font-semibold">
-              Get weekly announcements about free masterclasses, open batch scholarships, and remote job guides.
+              {language === 'en'
+                ? 'Get weekly announcements about free masterclasses, open batch scholarships, and remote job guides.'
+                : 'Sami sanarwar mako-mako game da darussan kyauta, tallafin karatu na bude baki daya, da jagororin aiki na nesa.'
+              }
             </p>
           </div>
 
@@ -65,7 +70,7 @@ export default function Footer({ onNavigate }: FooterProps) {
                 <input
                   type="email"
                   required
-                  placeholder="Enter your email address..."
+                  placeholder={language === 'en' ? 'Enter your email address...' : 'Shigar da adireshin imel dinka...'}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-slate-850 border border-slate-800 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-emerald-light flex-1"
@@ -74,14 +79,19 @@ export default function Footer({ onNavigate }: FooterProps) {
                   type="submit"
                   className="bg-brand-emerald hover:bg-brand-gold text-white font-bold px-6 py-3 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer text-sm"
                 >
-                  <span>Subscribe</span>
+                  <span>{language === 'en' ? 'Subscribe' : 'Yi Rajista'}</span>
                   <Send className="w-4 h-4" />
                 </button>
               </form>
             ) : (
               <div className="flex items-center gap-2 bg-teal-950/40 border border-teal-900 text-brand-emerald-light p-4 rounded-2xl max-w-md mx-auto lg:mr-0 justify-center animate-fade-in text-xs font-bold">
                 <Check className="w-4.5 h-4.5" />
-                <span>Subscription Saved! Check inbox for free guide material.</span>
+                <span>
+                  {language === 'en' 
+                    ? 'Subscription Saved! Check inbox for free guide material.' 
+                    : 'An ajiye rajistarka! Duba imel dinka don samun kayan koyo kyauta.'
+                  }
+                </span>
               </div>
             )}
           </div>
@@ -107,7 +117,10 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-semibold">
-            Al-Huda Digital Academy is dedicated to providing premium digital skills training and mentorship, guiding students into highly compensated, flexible, and remote tech careers worldwide.
+            {language === 'en'
+              ? 'Al-Huda Digital Academy is dedicated to providing premium digital skills training and mentorship, guiding students into highly compensated, flexible, and remote tech careers worldwide.'
+              : 'Al-Huda Digital Academy ta sadaukar da kanta wajen samar da ingantaccen horo da jagoranci na fasahar dijital, tare da jagorantar dalibai zuwa manyan ayyukan yi na nesa a fadin duniya.'
+            }
           </p>
 
           <div className="flex gap-3 pt-1">
@@ -130,14 +143,14 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
 
           <p className="text-xs text-slate-500 font-bold">
-            © {new Date().getFullYear()} Al-Huda Digital Academy. All Rights Reserved.
+            © {new Date().getFullYear()} Al-Huda Digital Academy. {language === 'en' ? 'All Rights Reserved.' : 'Duk Hakkoki Suna Kariya.'}
           </p>
         </div>
 
         {/* Learning Paths Links */}
         <div className="space-y-4">
           <h4 className="text-white font-heading font-bold text-sm uppercase tracking-wider">
-            Learning Paths
+            {language === 'en' ? 'Learning Paths' : 'Hanyoyin Koyo'}
           </h4>
           <ul className="space-y-2 text-xs sm:text-sm">
             {learningPaths.map((link, idx) => (
@@ -156,7 +169,7 @@ export default function Footer({ onNavigate }: FooterProps) {
         {/* Quick Help Resources Links */}
         <div className="space-y-4">
           <h4 className="text-white font-heading font-bold text-sm uppercase tracking-wider">
-            Resources
+            {language === 'en' ? 'Resources' : 'Abubuwan Taimako'}
           </h4>
           <ul className="space-y-2 text-xs sm:text-sm">
             {quickLinks.map((link, idx) => (
@@ -175,14 +188,16 @@ export default function Footer({ onNavigate }: FooterProps) {
         {/* Platform Contact details */}
         <div className="space-y-4">
           <h4 className="text-white font-heading font-bold text-sm uppercase tracking-wider">
-            Contact Head Office
+            {language === 'en' ? 'Contact Head Office' : 'Tuntubi Babban Ofishinmu'}
           </h4>
           <ul className="space-y-2 text-xs sm:text-sm text-slate-400 font-semibold leading-relaxed">
             <li>
-              <span>Borno, Maiduguri, Nigeria</span>
+              <span>{language === 'en' ? 'Borno, Maiduguri, Nigeria' : 'Borno, Maiduguri, Najeriya'}</span>
             </li>
             <li className="pt-2">
-              <span className="block text-[10px] uppercase text-slate-500 font-extrabold">Support Direct Email:</span>
+              <span className="block text-[10px] uppercase text-slate-500 font-extrabold">
+                {language === 'en' ? 'Support Direct Email:' : 'Imel Din Taimako Kai Tsaye:'}
+              </span>
               <a 
                 href="mailto:alhudadigitalacademy01@gmail.com"
                 className="text-brand-emerald-light hover:underline font-bold"
@@ -191,7 +206,9 @@ export default function Footer({ onNavigate }: FooterProps) {
               </a>
             </li>
             <li className="pt-2">
-              <span className="block text-[10px] uppercase text-slate-500 font-extrabold">Admissions Helpline:</span>
+              <span className="block text-[10px] uppercase text-slate-500 font-extrabold">
+                {language === 'en' ? 'Admissions Helpline:' : 'Layin Taimakon Rajista:'}
+              </span>
               <a 
                 href="tel:+2349028149646"
                 className="text-white hover:underline font-bold"
@@ -208,11 +225,18 @@ export default function Footer({ onNavigate }: FooterProps) {
       <div className="bg-slate-950 py-6 text-center text-[11px] text-slate-600 font-bold border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>
-            Al-Huda Digital Academy is a registered professional training center. All certificates carry unique verifiable hash tokens.
+            {language === 'en'
+              ? 'Al-Huda Digital Academy is a registered professional training center. All certificates carry unique verifiable hash tokens.'
+              : 'Al-Huda Digital Academy cibiyar horarwa ce ta kwararru mai rijista. Duk shaidun karatu suna dauke da lambobin tabbatarwa na musamman.'
+            }
           </p>
           <div className="flex gap-4">
-            <button className="hover:text-slate-400 transition cursor-pointer">Terms & Conditions</button>
-            <button className="hover:text-slate-400 transition cursor-pointer">Privacy Policy</button>
+            <button className="hover:text-slate-400 transition cursor-pointer">
+              {language === 'en' ? 'Terms & Conditions' : 'Sharuda & Dokoki'}
+            </button>
+            <button className="hover:text-slate-400 transition cursor-pointer">
+              {language === 'en' ? 'Privacy Policy' : 'Tsarin Tsare Sirri'}
+            </button>
           </div>
         </div>
       </div>

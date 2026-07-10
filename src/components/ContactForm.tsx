@@ -5,9 +5,11 @@
 
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquare, Check, Sparkles, Facebook, Twitter, Instagram, Linkedin, Loader2 } from 'lucide-react';
+import { useLanguage } from '../lib/LanguageContext';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 export default function ContactForm() {
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,7 +33,7 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      alert('Please fill out all required fields.');
+      alert(language === 'en' ? 'Please fill out all required fields.' : 'Da fatan za a cika dukkan bayanan da ake bukata.');
       return;
     }
 
@@ -76,7 +78,7 @@ export default function ContactForm() {
 
       // If submission fails, throw an error to show the exact error message required
       if (!formspreeSuccess) {
-        throw new Error('Something went wrong. Please try again.');
+        throw new Error(language === 'en' ? 'Something went wrong. Please try again.' : 'Wani abu ya faru ba daidai ba. Da fatan za a sake gwadawa.');
       }
 
       // Also save to Supabase / Local Storage as fallback so inquiries are NEVER lost!
@@ -117,7 +119,7 @@ export default function ContactForm() {
       setIsSubmitted(true);
     } catch (err: any) {
       console.error('Contact form submission error:', err);
-      setDbError('Something went wrong. Please try again.');
+      setDbError(language === 'en' ? 'Something went wrong. Please try again.' : 'Wani abu ya faru ba daidai ba. Da fatan za a sake gwadawa.');
     } finally {
       setIsSubmitting(false);
     }
@@ -154,13 +156,24 @@ export default function ContactForm() {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
                 <MessageSquare className="w-3.5 h-3.5 text-brand-gold-light" />
-                <span>Get In Touch</span>
+                <span>{language === 'en' ? 'Get In Touch' : 'Tuntube Mu'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
-                Connect with our <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Admission Guides</span>
+                {language === 'en' ? (
+                  <>
+                    Connect with our <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Admission Guides</span>
+                  </>
+                ) : (
+                  <>
+                    Tuntubi Masu <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-emerald to-teal-600">Jagorantar Rajista</span>
+                  </>
+                )}
               </h2>
               <p className="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">
-                Have specific queries regarding Batch 04 tuition, scheduling, or physical certifications? Reach out to our customer support guides. We respond within 12 hours.
+                {language === 'en'
+                  ? 'Have specific queries regarding Batch 04 tuition, scheduling, or physical certifications? Reach out to our customer support guides. We respond within 12 hours.'
+                  : 'Kuna da tambayoyi na musamman game da kudin makaranta na Batch 04, tsarin darussa, ko takaddun shaida na zahiri? Tuntubi jagororin tallafin abokan cinikinmu. Muna ba da amsa a cikin sa\'o\'i 12.'
+                }
               </p>
             </div>
 
@@ -172,7 +185,9 @@ export default function ContactForm() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Support Email</span>
+                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                    {language === 'en' ? 'Support Email' : 'Imel Din Taimako'}
+                  </span>
                   <a 
                     href="mailto:alhudadigitalacademy01@gmail.com" 
                     className="text-sm sm:text-base font-bold text-slate-700 hover:text-brand-emerald transition"
@@ -188,7 +203,9 @@ export default function ContactForm() {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Helpline (WhatsApp)</span>
+                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                    {language === 'en' ? 'Helpline (WhatsApp)' : 'Layin Taimako (WhatsApp)'}
+                  </span>
                   <a 
                     href="tel:+2349028149646" 
                     className="text-sm sm:text-base font-bold text-slate-700 hover:text-brand-emerald transition"
@@ -204,9 +221,11 @@ export default function ContactForm() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Head Office Location</span>
+                  <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                    {language === 'en' ? 'Head Office Location' : 'Wurin Babban Ofishi'}
+                  </span>
                   <p className="text-sm sm:text-base font-bold text-slate-700 leading-tight">
-                    Borno, Maiduguri, Nigeria
+                    {language === 'en' ? 'Borno, Maiduguri, Nigeria' : 'Borno, Maiduguri, Najeriya'}
                   </p>
                 </div>
               </div>
@@ -214,7 +233,9 @@ export default function ContactForm() {
 
             {/* Social channels connect */}
             <div className="space-y-2 pt-2 border-t border-slate-100">
-              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Follow Al-Huda Academy</span>
+              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                {language === 'en' ? 'Follow Al-Huda Academy' : 'Ku Bi Al-Huda Academy'}
+              </span>
               <div className="flex gap-3">
                 {[
                   { icon: <Facebook className="w-5 h-5" />, href: 'https://www.facebook.com/profile.php?id=100094286896470' },
@@ -243,7 +264,9 @@ export default function ContactForm() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Name field */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-600 uppercase">Your Name *</label>
+                  <label className="block text-xs font-bold text-slate-600 uppercase">
+                    {language === 'en' ? 'Your Name *' : 'Sunanka *'}
+                  </label>
                   <input
                     type="text"
                     required
@@ -256,7 +279,9 @@ export default function ContactForm() {
 
                 {/* Email field */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-600 uppercase">Email Address *</label>
+                  <label className="block text-xs font-bold text-slate-600 uppercase">
+                    {language === 'en' ? 'Email Address *' : 'Adireshin Imel *'}
+                  </label>
                   <input
                     type="email"
                     required
@@ -270,25 +295,41 @@ export default function ContactForm() {
 
               {/* Subject dropdown */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-600 uppercase">Subject Topic</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase">
+                  {language === 'en' ? 'Subject Topic' : 'Maudu\'in Tambaya'}
+                </label>
                 <select
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald cursor-pointer"
                 >
-                  <option value="General Inquiry">General Admissions Inquiry</option>
-                  <option value="Batch Tuitions">Batch 04 Fee Structure & Payment Plans</option>
-                  <option value="Corporate Scholarship">CSR / Corporate Scholarships Programs</option>
-                  <option value="Mentor Partnerships">Expert Instructor & Mentor Application</option>
+                  <option value="General Inquiry">
+                    {language === 'en' ? 'General Admissions Inquiry' : 'Bayanai na Gaba Daya Game da Rajista'}
+                  </option>
+                  <option value="Batch Tuitions">
+                    {language === 'en' ? 'Batch 04 Fee Structure & Payment Plans' : 'Tsarin Kudin Karatu na Batch 04'}
+                  </option>
+                  <option value="Corporate Scholarship">
+                    {language === 'en' ? 'CSR / Corporate Scholarships Programs' : 'Shirye-shiryen Tallafin Karatu na Kamfanoni'}
+                  </option>
+                  <option value="Mentor Partnerships">
+                    {language === 'en' ? 'Expert Instructor & Mentor Application' : 'Neman Shiga A Matsayin Malami Ko Mai Jagora'}
+                  </option>
                 </select>
               </div>
 
               {/* Message block */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-600 uppercase">Write Your Query *</label>
+                <label className="block text-xs font-bold text-slate-600 uppercase">
+                  {language === 'en' ? 'Write Your Query *' : 'Rubuta Tambayarka *'}
+                </label>
                 <textarea
                   required
-                  placeholder="Describe what information you are seeking from the Al-Huda academy guides..."
+                  placeholder={
+                    language === 'en'
+                      ? 'Describe what information you are seeking from the Al-Huda academy guides...'
+                      : 'Kwatanta irin bayanan da kake nema daga jagororin makarantar Al-Huda...'
+                  }
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -310,11 +351,11 @@ export default function ContactForm() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Sending message...</span>
+                    <span>{language === 'en' ? 'Sending message...' : 'Ana tura sako...'}</span>
                   </>
                 ) : (
                   <>
-                    <span>Send Inquiry Message</span>
+                    <span>{language === 'en' ? 'Send Inquiry Message' : 'Tura Sakon Tambaya'}</span>
                     <Send className="w-4 h-4" />
                   </>
                 )}
@@ -344,16 +385,27 @@ export default function ContactForm() {
 
             {/* Success Message Header */}
             <h3 className="font-heading font-extrabold text-slate-800 text-xl sm:text-2xl leading-snug">
-              ✅ Message Sent Successfully!
+              {language === 'en' ? '✅ Message Sent Successfully!' : '✅ An Tura Sako Cikin Nasara!'}
             </h3>
 
             {/* Custom Success Body Text */}
             <div className="space-y-4 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
               <p>
-                Thank you, <strong className="text-slate-800 font-extrabold">{formData.name}</strong>! Your message has been received successfully.
+                {language === 'en' ? (
+                  <>
+                    Thank you, <strong className="text-slate-800 font-extrabold">{formData.name}</strong>! Your message has been received successfully.
+                  </>
+                ) : (
+                  <>
+                    Godiya gare ku, <strong className="text-slate-800 font-extrabold">{formData.name}</strong>! An sami sakonku cikin nasara.
+                  </>
+                )}
               </p>
               <p>
-                Our team will review your inquiry and contact you within 12 business hours via the email address or phone number you provided.
+                {language === 'en'
+                  ? 'Our team will review your inquiry and contact you within 12 business hours via the email address or phone number you provided.'
+                  : 'Tawagar mu za ta duba tambayarku kuma ta tuntube ku a cikin sa\'o\'i 12 na aiki ta hanyar adireshin imel ko lambar waya da kuka bayar.'
+                }
               </p>
             </div>
 
@@ -363,14 +415,14 @@ export default function ContactForm() {
                 onClick={handleReset}
                 className="w-full bg-brand-emerald hover:bg-brand-emerald-light text-white font-bold text-xs py-3 px-6 rounded-xl transition duration-300 shadow-md cursor-pointer flex items-center justify-center gap-2"
               >
-                Send Another Message
+                {language === 'en' ? 'Send Another Message' : 'Sake Tura Wani Sakon'}
               </button>
               
               <button
                 onClick={handleBackToHome}
                 className="w-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-xs py-3 px-6 rounded-xl transition duration-300 shadow-sm cursor-pointer"
               >
-                Back to Home
+                {language === 'en' ? 'Back to Home' : 'Koma Gida'}
               </button>
             </div>
           </div>

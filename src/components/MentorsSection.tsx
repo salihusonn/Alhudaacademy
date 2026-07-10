@@ -6,13 +6,14 @@
 import React from 'react';
 import { Sparkles, Linkedin, Twitter, Globe, Award, BookOpen, MessageSquare, Facebook } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface Mentor {
   id: number;
   name: string;
-  role: string;
-  expertise: string;
-  bio: string;
+  role: { en: string; ha: string };
+  expertise: { en: string; ha: string };
+  bio: { en: string; ha: string };
   photoUrl: string;
   socials: {
     linkedin?: string;
@@ -20,27 +21,32 @@ interface Mentor {
     globe?: string;
     facebook?: string;
   };
-  skills?: string[];
+  skills: { en: string[]; ha: string[] };
   imageFit?: 'cover' | 'contain';
   imageClass?: string;
 }
 
-// Easy to edit Mentors data array
 const MENTORS_DATA: Mentor[] = [
   {
     id: 1,
     name: 'Adam Salihu Adam',
-    role: 'Founder, Al-Huda Digital Academy',
-    expertise: 'Professional Graphic Designer, Video Editor & Freelancer',
-    bio: 'Adam Salihu Adam is the Founder of Al-Huda Digital Academy and a passionate creative professional specializing in graphic design, video editing, and freelance digital services. He is dedicated to empowering young people with practical, in-demand digital skills that help them build successful careers, grow businesses, and create opportunities in the digital economy.',
+    role: {
+      en: 'Founder, Al-Huda Digital Academy',
+      ha: 'Wanda Ya Kafa, Al-Huda Digital Academy'
+    },
+    expertise: {
+      en: 'Professional Graphic Designer, Video Editor & Freelancer',
+      ha: 'Kwararren Mai Zane, Gyaran Bidiyo & Freelancer'
+    },
+    bio: {
+      en: 'Adam Salihu Adam is the Founder of Al-Huda Digital Academy and a passionate creative professional specializing in graphic design, video editing, and freelance digital services. He is dedicated to empowering young people with practical, in-demand digital skills that help them build successful careers, grow businesses, and create opportunities in the digital economy.',
+      ha: 'Adam Salihu Adam shi ne wanda ya kafa Al-Huda Digital Academy, kuma babban kwararren mai zane, gyaran bidiyo, da freelance dijital. Ya sadaukar da kansa don taimakawa matasa su sami kwarewar fasaha ta gari domin gina rayuwar aiki mai nasara.'
+    },
     photoUrl: 'https://lh3.googleusercontent.com/d/1NkYPJjiRTgE8ny4xMC_BVPzMGwnQQxdN',
-    skills: [
-      'Graphic Design',
-      'Video Editing',
-      'Branding',
-      'Freelancing',
-      'Digital Skills Training'
-    ],
+    skills: {
+      en: ['Graphic Design', 'Video Editing', 'Branding', 'Freelancing', 'Digital Skills Training'],
+      ha: ['Zane da Waya', 'Gyaran Bidiyo', 'Branding', 'Freelancing', 'Horar da Fasaha']
+    },
     socials: {
       facebook: 'https://www.facebook.com/adam.salihuadam.16',
       linkedin: 'https://linkedin.com',
@@ -51,16 +57,23 @@ const MENTORS_DATA: Mentor[] = [
   {
     id: 2,
     name: 'Bala Sadiq',
-    role: 'Co founder',
-    expertise: 'Professional Graphic Designer & Freelancer',
-    bio: 'Bala Sadiq is the Co-founder of Al-Huda Digital Academy, a professional graphic designer, and freelancer.',
+    role: {
+      en: 'Co-founder',
+      ha: 'Abokin Hadin Gwiwa'
+    },
+    expertise: {
+      en: 'Professional Graphic Designer & Freelancer',
+      ha: 'Kwararren Mai Zane & Freelancer'
+    },
+    bio: {
+      en: 'Bala Sadiq is the Co-founder of Al-Huda Digital Academy, a professional graphic designer, and freelancer.',
+      ha: 'Bala Sadiq shi ne abokin hadin gwiwa na Al-Huda Digital Academy, kwararren mai zane ta wayar salula da freelancer.'
+    },
     photoUrl: 'https://lh3.googleusercontent.com/d/1fY83wDkZ1UfFWTFalkoDr_LTbRZ5-Djm',
-    skills: [
-      'Graphic Design',
-      'Freelancing',
-      'Branding',
-      'Creative Design'
-    ],
+    skills: {
+      en: ['Graphic Design', 'Freelancing', 'Branding', 'Creative Design'],
+      ha: ['Zane da Waya', 'Freelancing', 'Branding', 'Zane Mai Kyau']
+    },
     socials: {
       facebook: 'https://www.facebook.com/profile.php?id=100094286896470',
       linkedin: 'https://linkedin.com',
@@ -71,17 +84,24 @@ const MENTORS_DATA: Mentor[] = [
   {
     id: 3,
     name: 'ADEYEMI RIDWAN',
-    role: 'co founder',
-    expertise: 'Professional Graphic Designer',
-    bio: 'graphic designer',
+    role: {
+      en: 'Co-founder',
+      ha: 'Abokin Hadin Gwiwa'
+    },
+    expertise: {
+      en: 'Professional Graphic Designer',
+      ha: 'Kwararren Mai Zane'
+    },
+    bio: {
+      en: 'A highly experienced professional graphic designer specializing in advanced typographic compositions, color theories, and brand identity projects.',
+      ha: 'Kwararren mai zane mai zurfin kwarewa a fannin tsara hotuna, zabar kalar alama, da zane-zane na tallace-tallace.'
+    },
     photoUrl: 'https://lh3.googleusercontent.com/d/1w6hT-d5PP1LX6afXn4pkDWn-4hfErj3R',
     imageClass: 'object-contain object-top scale-[1.65] origin-top bg-white group-hover:scale-[1.73] transition duration-500',
-    skills: [
-      'Graphic Design',
-      'Branding',
-      'Creative Design',
-      'Visual Communication'
-    ],
+    skills: {
+      en: ['Graphic Design', 'Branding', 'Creative Design', 'Visual Communication'],
+      ha: ['Zane da Waya', 'Branding', 'Zane Mai Kyau', 'Sadarwar Hoto']
+    },
     socials: {
       facebook: 'https://www.facebook.com/profile.php?id=100094286896470',
       linkedin: 'https://linkedin.com',
@@ -92,16 +112,23 @@ const MENTORS_DATA: Mentor[] = [
   {
     id: 4,
     name: 'Agyiri Timothy',
-    role: 'Co-Founder',
-    expertise: 'Graphic Designer & Branding Specialist',
-    bio: 'A skilled Graphic Designer, Branding Specialist, and Creative Visual Designer passionate about creating impactful designs and supporting the growth of Al-Huda Digital Academy through creativity, innovation, and teamwork.',
+    role: {
+      en: 'Co-Founder',
+      ha: 'Abokin Hadin Gwiwa'
+    },
+    expertise: {
+      en: 'Graphic Designer & Branding Specialist',
+      ha: 'Mai Zane & Kwararren Branding'
+    },
+    bio: {
+      en: 'A skilled Graphic Designer, Branding Specialist, and Creative Visual Designer passionate about creating impactful designs and supporting the growth of Al-Huda Digital Academy through creativity, innovation, and teamwork.',
+      ha: 'Kwararren mai zane da branding, mai matukar sha\'awar samar da kyawawan hotunan talla da goyon bayan bunkasar Al-Huda Digital Academy ta hanyar kirkire-kirkire.'
+    },
     photoUrl: 'https://lh3.googleusercontent.com/d/1sB-jzHSoHL7fSWZD6uFqJyAJBeCzcNNA',
-    skills: [
-      'Graphic Design',
-      'Branding',
-      'Visual Design',
-      'Teamwork'
-    ],
+    skills: {
+      en: ['Graphic Design', 'Branding', 'Visual Design', 'Teamwork'],
+      ha: ['Zane da Waya', 'Branding', 'Zane Mai Kyau', 'Aikin Kungiya']
+    },
     socials: {
       facebook: 'https://www.facebook.com/profile.php?id=100094286896470',
       linkedin: 'https://linkedin.com',
@@ -112,6 +139,9 @@ const MENTORS_DATA: Mentor[] = [
 ];
 
 export default function MentorsSection() {
+  const { language } = useLanguage();
+  const activeLang = language === 'en' ? 'en' : 'ha';
+
   return (
     <section id="mentors" className="py-20 md:py-28 bg-white relative overflow-hidden">
       {/* Visual background enhancements */}
@@ -129,13 +159,24 @@ export default function MentorsSection() {
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
             <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
-            <span>Academy Leadership</span>
+            <span>{language === 'en' ? 'Academy Leadership' : 'Jagorancin Academy'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
-            Meet Our <span className="text-brand-emerald">Founders</span>
+            {language === 'en' ? (
+              <>
+                Meet Our <span className="text-brand-emerald">Founders</span>
+              </>
+            ) : (
+              <>
+                Gana da <span className="text-brand-emerald">Malamanmu</span>
+              </>
+            )}
           </h2>
           <p className="text-sm sm:text-base text-slate-500 font-medium">
-            Learn directly from our founders and creative professionals dedicated to guiding you toward a thriving digital career.
+            {language === 'en'
+              ? 'Learn directly from our founders and creative professionals dedicated to guiding you toward a thriving digital career.'
+              : 'Koyi kai tsaye daga wadanda suka kafa wannan makaranta da kwararrun da suka sadaukar da kansu wajen yi muku jagora.'
+            }
           </p>
         </motion.div>
 
@@ -184,7 +225,7 @@ export default function MentorsSection() {
                 {/* Badge area */}
                 <div className="absolute top-3 left-3">
                   <span className="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-emerald-500/90 text-white shadow-sm backdrop-blur-sm">
-                    {mentor.expertise.split('&')[0].split(',')[0]}
+                    {mentor.expertise[activeLang].split('&')[0].split(',')[0]}
                   </span>
                 </div>
               </div>
@@ -197,25 +238,25 @@ export default function MentorsSection() {
                     {mentor.name}
                   </h3>
                   <p className="text-[11px] font-bold text-brand-gold mt-0.5">
-                    {mentor.role}
+                    {mentor.role[activeLang]}
                   </p>
                 </div>
 
                 {/* Core Expertise label */}
                 <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-3 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
                   <BookOpen className="w-3 h-3 text-brand-emerald flex-shrink-0" />
-                  <span className="truncate">{mentor.expertise}</span>
+                  <span className="truncate">{mentor.expertise[activeLang]}</span>
                 </div>
 
                 {/* Short Bio */}
                 <p className="text-xs text-slate-500 leading-relaxed font-medium flex-grow mb-3">
-                  {mentor.bio}
+                  {mentor.bio[activeLang]}
                 </p>
 
                 {/* Skills Badges */}
                 {mentor.skills && (
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {mentor.skills.map((skill, sIdx) => (
+                    {mentor.skills[activeLang].map((skill, sIdx) => (
                       <span 
                         key={sIdx}
                         className="px-1.5 py-0.5 rounded-md text-[9px] font-extrabold bg-emerald-50 text-[#075C33] border border-emerald-100/60 shadow-sm"
@@ -278,7 +319,7 @@ export default function MentorsSection() {
 
                   {/* Tiny CTAs */}
                   <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider group-hover:text-brand-emerald transition">
-                    Verified Mentor
+                    {language === 'en' ? 'Verified Mentor' : 'Tabbataccen Malami'}
                   </span>
                 </div>
               </div>

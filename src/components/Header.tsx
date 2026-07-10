@@ -4,9 +4,10 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, GraduationCap, ChevronDown, Calendar, Sparkles } from 'lucide-react';
+import { Menu, X, GraduationCap, ChevronDown, Calendar, Sparkles, Globe } from 'lucide-react';
 import { CURRENT_BATCH } from '../data/academyData';
 import AlHudaLogo from './AlHudaLogo';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
@@ -17,7 +18,7 @@ interface HeaderProps {
 export default function Header({ onNavigate, activeSection, onEnrollClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,14 +33,14 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
   }, []);
 
   const navItems = [
-    { label: 'Home', id: 'home' },
-    { label: 'Courses', id: 'courses' },
-    { label: 'Why Us', id: 'why-us' },
-    { label: 'Our Mentors', id: 'mentors' },
-    { label: 'How It Works', id: 'how-it-works' },
-    { label: 'Success Stories', id: 'stories' },
-    { label: 'FAQs', id: 'faq' },
-    { label: 'Contact', id: 'contact' },
+    { labelKey: 'nav.home', id: 'home' },
+    { labelKey: 'nav.courses', id: 'courses' },
+    { labelKey: 'nav.whyUs', id: 'why-us' },
+    { labelKey: 'nav.mentors', id: 'mentors' },
+    { labelKey: 'nav.howItWorks', id: 'how-it-works' },
+    { labelKey: 'nav.stories', id: 'stories' },
+    { labelKey: 'nav.faq', id: 'faq' },
+    { labelKey: 'nav.contact', id: 'contact' },
   ];
 
   const handleNavClick = (id: string) => {
@@ -84,35 +85,93 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
                       : 'text-slate-600 hover:text-brand-emerald hover:bg-slate-50'
                   }`}
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </button>
               ))}
             </nav>
 
-            {/* Right side CTA */}
+            {/* Right side CTA & Language Switcher */}
             <div className="hidden sm:flex items-center gap-4">
+              {/* Segmented language switcher control */}
+              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold text-slate-600 border border-slate-200/80 mr-1" id="desktop-lang-switcher">
+                <button 
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${language === 'en' ? 'bg-white text-brand-emerald shadow-xs' : 'hover:text-brand-emerald text-slate-500'}`}
+                >
+                  English
+                </button>
+                <button 
+                  onClick={() => setLanguage('ha')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${language === 'ha' ? 'bg-white text-brand-emerald shadow-xs' : 'hover:text-brand-emerald text-slate-500'}`}
+                >
+                  Hausa
+                </button>
+              </div>
+
               <button
                 onClick={() => handleNavClick('mentors')}
-                className="text-sm font-semibold text-brand-gold hover:text-amber-800 transition cursor-pointer"
+                className="text-sm font-semibold text-brand-gold hover:text-amber-800 transition cursor-pointer whitespace-nowrap"
               >
-                Meet Mentors
+                {t('nav.mentors')}
               </button>
               <button
                 onClick={onEnrollClick}
-                className="bg-brand-emerald text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-teal-800/10 hover:bg-brand-gold transition duration-300 hover:scale-[1.02] cursor-pointer"
+                className="bg-brand-emerald text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-teal-800/10 hover:bg-brand-gold transition duration-300 hover:scale-[1.02] cursor-pointer whitespace-nowrap"
                 id="header-enroll-btn"
               >
-                Enroll Now
+                {t('nav.enrollBtn')}
               </button>
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <div className="flex lg:hidden">
+            {/* Mobile Actions: directly contains compact toggle */}
+            <div className="flex sm:hidden items-center gap-2">
+              <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px] font-bold text-slate-600 border border-slate-200" id="mobile-lang-switcher-header">
+                <button 
+                  onClick={() => setLanguage('en')}
+                  className={`px-2 py-1 rounded transition-all cursor-pointer ${language === 'en' ? 'bg-white text-brand-emerald shadow-xs' : 'text-slate-500'}`}
+                >
+                  EN
+                </button>
+                <button 
+                  onClick={() => setLanguage('ha')}
+                  className={`px-2 py-1 rounded transition-all cursor-pointer ${language === 'ha' ? 'bg-white text-brand-emerald shadow-xs' : 'text-slate-500'}`}
+                >
+                  HA
+                </button>
+              </div>
+              
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 rounded-lg text-slate-600 hover:text-brand-emerald hover:bg-slate-100 transition cursor-pointer"
                 aria-label="Toggle menu"
                 id="menu-toggle"
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+
+            {/* Tablet Menu Toggle (hidden on small screens, shown when sm but not lg) */}
+            <div className="hidden sm:flex lg:hidden items-center gap-3">
+              <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px] font-bold text-slate-600 border border-slate-200" id="tablet-lang-switcher-header">
+                <button 
+                  onClick={() => setLanguage('en')}
+                  className={`px-2.5 py-1 rounded transition-all cursor-pointer ${language === 'en' ? 'bg-white text-brand-emerald shadow-xs' : 'text-slate-500'}`}
+                >
+                  EN
+                </button>
+                <button 
+                  onClick={() => setLanguage('ha')}
+                  className={`px-2.5 py-1 rounded transition-all cursor-pointer ${language === 'ha' ? 'bg-white text-brand-emerald shadow-xs' : 'text-slate-500'}`}
+                >
+                  HA
+                </button>
+              </div>
+              
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-lg text-slate-600 hover:text-brand-emerald hover:bg-slate-100 transition cursor-pointer"
+                aria-label="Toggle menu"
+                id="menu-toggle-tablet"
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -135,7 +194,7 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
                     : 'text-slate-700 hover:bg-slate-50 hover:text-brand-emerald'
                 }`}
               >
-                {item.label}
+                {t(item.labelKey)}
               </button>
             ))}
             <div className="h-px bg-slate-100 my-2"></div>
@@ -144,7 +203,7 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
                 onClick={() => handleNavClick('mentors')}
                 className="text-center py-2.5 rounded-lg border border-brand-gold text-brand-gold font-bold text-sm hover:bg-amber-50 transition cursor-pointer"
               >
-                Meet Our Mentors
+                {t('nav.mentors')}
               </button>
               <button
                 onClick={() => {
@@ -154,7 +213,7 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
                 className="text-center py-2.5 rounded-lg bg-brand-emerald text-white font-bold text-sm shadow-md hover:bg-brand-gold transition cursor-pointer"
                 id="mobile-enroll-btn"
               >
-                Enroll Now
+                {t('nav.enrollBtn')}
               </button>
             </div>
           </nav>
@@ -163,3 +222,4 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
     </header>
   );
 }
+
