@@ -38,7 +38,6 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
     { labelKey: 'nav.whyUs', id: 'why-us' },
     { labelKey: 'nav.mentors', id: 'mentors' },
     { labelKey: 'nav.howItWorks', id: 'how-it-works' },
-    { labelKey: 'nav.stories', id: 'stories' },
     { labelKey: 'nav.faq', id: 'faq' },
     { labelKey: 'nav.contact', id: 'contact' },
   ];

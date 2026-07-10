@@ -3,9 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
+
+interface CountUpProps {
+  value: string;
+}
+
+function CountUp({ value }: CountUpProps) {
+  const [displayValue, setDisplayValue] = useState('');
+
+  useEffect(() => {
+    if (value === 'Loading...') {
+      setDisplayValue('Loading...');
+      return;
+    }
+
+    const match = value.match(/^([\d.]+)(.*)$/);
+    if (!match) {
+      setDisplayValue(value);
+      return;
+    }
+
+    const [, numStr, suffix] = match;
+    const target = parseFloat(numStr);
+    if (isNaN(target)) {
+      setDisplayValue(value);
+      return;
+    }
+
+    const isFloat = numStr.includes('.');
+    const duration = 1200; // Animation duration in ms
+    const frameRate = 60;
+    const totalFrames = Math.round((duration / 1000) * frameRate);
+    let frame = 0;
+
+    const timer = setInterval(() => {
+      frame++;
+      const progress = frame / totalFrames;
+      const easedProgress = progress * (2 - progress); // easeOutQuad
+      const current = easedProgress * target;
+
+      if (frame >= totalFrames) {
+        clearInterval(timer);
+        setDisplayValue(value);
+      } else {
+        const formatted = isFloat ? current.toFixed(1) : Math.floor(current).toString();
+        setDisplayValue(formatted + suffix);
+      }
+    }, 1000 / frameRate);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <>{displayValue}</>;
+}
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -121,23 +174,33 @@ export default function Hero({ onNavigate, onEnrollClick }: HeroProps) {
 
         {/* 3. Floating Stats Counter Dashboard Block */}
         <div className="max-w-5xl mx-auto w-full mt-12 md:mt-16">
-          <div className="bg-white border border-slate-100 rounded-2xl md:rounded-3xl p-6 sm:p-8 shadow-md shadow-slate-100/40 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {stats.map((stat, idx) => (
-              <div 
-                key={idx} 
-                className="space-y-1 text-center sm:text-left border-slate-100 sm:border-r last:border-0 sm:pr-4 last:pr-0"
-              >
-                <span className="block text-2xl sm:text-3xl font-heading font-extrabold text-[#075C33] tracking-tight">
-                  {stat.value}
-                </span>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-700">
-                  {stat.label}
-                </h4>
-                <p className="text-[11px] text-slate-400 leading-normal font-medium">
-                  {stat.description}
-                </p>
-              </div>
-            ))}
+          <div className="bg-white border border-slate-100 rounded-2xl md:rounded-3xl p-6 sm:p-8 shadow-md shadow-slate-100/40 grid grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            {stats.map((stat, idx) => {
+              const isOdd = idx % 2 === 0;
+              const isLastInRowDesktop = (idx + 1) % 3 === 0;
+              const itemBorderClass = `space-y-1 text-center sm:text-left ${
+                isOdd ? 'border-r border-slate-100 pr-4' : 'pr-0'
+              } ${
+                isLastInRowDesktop ? 'md:border-r-0 md:pr-0' : 'md:border-r md:border-slate-100 md:pr-4'
+              }`;
+
+              return (
+                <div 
+                  key={idx} 
+                  className={itemBorderClass}
+                >
+                  <span className="block text-2xl sm:text-3xl font-heading font-extrabold text-[#075C33] tracking-tight">
+                    <CountUp value={stat.value} />
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-700">
+                    {stat.label}
+                  </h4>
+                  <p className="text-[11px] text-slate-400 leading-normal font-medium">
+                    {stat.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
 

@@ -217,9 +217,9 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                       <div className="flex items-center gap-1.5">
                         <Star className="w-4 h-4 fill-brand-gold-light text-brand-gold-light" />
                         <span className="text-slate-700 font-extrabold">{course.rating}</span>
-                        <span>({course.reviewsCount} {language === 'en' ? 'reviews' : 'ra\'ayoyi'})</span>
+                        <span>({language === 'en' ? '1 Review' : 'Ra\'ayi 1'})</span>
                       </div>
-                      <span>{course.studentsCount.toLocaleString()}+ {language === 'en' ? 'Enrolled' : 'Rajista'}</span>
+                      <span>{language === 'en' ? '1 Enrolled Student' : 'Dalibi 1 Da Ya Yi Rajista'}</span>
                     </div>
 
                     <h3 className="font-heading font-extrabold text-slate-800 text-lg leading-snug group-hover:text-brand-emerald transition duration-200">

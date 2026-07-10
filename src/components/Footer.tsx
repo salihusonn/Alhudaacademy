@@ -36,7 +36,6 @@ export default function Footer({ onNavigate }: FooterProps) {
   const quickLinks = [
     { label: language === 'en' ? 'Explore Courses' : 'Duba Kwasa-kwasai', id: 'courses' },
     { label: language === 'en' ? 'Admissions FAQ' : 'Tambayoyin Shiga Makaranta', id: 'faq' },
-    { label: language === 'en' ? 'Success Spotlight' : 'Labaran Nasara', id: 'stories' },
     { label: language === 'en' ? 'How It Works' : 'Yadda Yake Aiki', id: 'how-it-works' },
     { label: language === 'en' ? 'Meet Our Mentors' : 'Hadu da Malamanmu', id: 'mentors' },
     { label: language === 'en' ? 'Inquiry Form' : 'Fom Din Tambayoyi', id: 'contact' },

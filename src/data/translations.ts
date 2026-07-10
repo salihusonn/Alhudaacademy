@@ -702,17 +702,21 @@ export const COURSES_HA: Course[] = [
 ];
 
 export const ACADEMY_STATS_EN = [
-  { label: 'Enrolled Students', value: '18,500+', description: 'Worldwide learning digital skills' },
-  { label: 'Graduates Certified', value: '12,400+', description: 'Earning and working globally' },
-  { label: 'Active Mentors', value: '35+', description: 'Industry experts guiding you' },
-  { label: 'Course Rating', value: '4.8/5.0', description: 'Based on 4,200+ student reviews' },
+  { label: 'Enrolled Students', value: '3', description: 'Growing our digital learning community.' },
+  { label: 'Graduates Certified', value: 'Loading...', description: 'Our first graduates will be certified soon.' },
+  { label: 'Active Mentors', value: '4', description: 'Experienced mentors guiding every student.' },
+  { label: 'Course Rating', value: '3.0/5.0', description: 'Based on current student feedback.' },
+  { label: 'Digital Skills Courses', value: '5+', description: 'Comprehensive training programs.' },
+  { label: 'Languages', value: '2', description: 'English & Hausa.' },
 ];
 
 export const ACADEMY_STATS_HA = [
-  { label: 'Daliban Da Suka Yi Rajista', value: '18,500+', description: 'Suna koyon fasahar dijital a duk fadin duniya' },
-  { label: 'Daliban Da Suka Kammala', value: '12,400+', description: 'Suna aiki da samun kudi a fadin duniya' },
-  { label: 'Kwararrun Malami', value: '35+', description: 'Kwararru a masana\'antu suna muku jagora' },
-  { label: 'Kimar Kwasa-kwasai', value: '4.8/5.0', description: 'Dangane da ra\'ayoyin dalibai sama da 4,200+' },
+  { label: 'Daliban Da Suka Yi Rajista', value: '3', description: "Bunkasa al'ummar koyon fasaharmu." },
+  { label: 'Daliban Da Suka Kammala', value: 'Loading...', description: 'Za a ba wa dalibanmu na farko takardar shaida nan ba da dadewa ba.' },
+  { label: 'Kwararrun Malami', value: '4', description: 'Malamai masu kwarewa suna jagorantar kowane dalibi.' },
+  { label: 'Kimar Kwasa-kwasai', value: '3.0/5.0', description: "Dangane da ra'ayoyin dalibanmu na yanzu." },
+  { label: 'Kwasa-kwasan Fasahar Dijital', value: '5+', description: 'Cikakkun shirye-shiryen horarwa.' },
+  { label: 'Harsuna', value: '2', description: 'Turanci & Hausa.' },
 ];
 
 export const BENEFITS_EN = [

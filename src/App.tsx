@@ -10,11 +10,12 @@ import Benefits from './components/Benefits';
 import CourseDirectory from './components/CourseDirectory';
 import MentorsSection from './components/MentorsSection';
 import HowItWorks from './components/HowItWorks';
-import SuccessStories from './components/SuccessStories';
 import FAQSection from './components/FAQSection';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import EnrollModal from './components/EnrollModal';
+import FloatingChatButtons from './components/FloatingChatButtons';
+
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -43,7 +44,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'courses', 'why-us', 'mentors', 'how-it-works', 'stories', 'faq', 'contact'];
+      const sections = ['home', 'courses', 'why-us', 'mentors', 'how-it-works', 'faq', 'contact'];
       const scrollPosition = window.scrollY + 180; // trigger point with margin
 
       for (const section of sections) {
@@ -85,9 +86,6 @@ export default function App() {
         {/* Roadmap Roadmap ("How It Works") */}
         <HowItWorks />
 
-        {/* Student Testimonials Slider */}
-        <SuccessStories />
-
         {/* Searchable Accordion FAQs */}
         <FAQSection />
 
@@ -104,6 +102,9 @@ export default function App() {
         onClose={() => setIsEnrollOpen(false)} 
         preSelectedCourseId={selectedCourseId} 
       />
+
+      {/* Floating Chat Integrations (WhatsApp and Telegram) */}
+      <FloatingChatButtons />
     </div>
   );
 }

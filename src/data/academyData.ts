@@ -399,3 +399,18 @@ export const FAQS: FAQItem[] = [
     answer: 'To make premium digital skills highly accessible, we charge a very affordable flat fee of ₦2,500 per course with no hidden charges. This includes full mentorship, materials, and certificates. Payment can be made via a manual bank transfer or community scholarship during the enrollment process.',
   }
 ];
+
+export const CHAT_CONFIG = {
+  whatsapp: {
+    phoneNumber: '+2348168616869',
+    message: "Hello Al-Huda Digital Academy! I'm interested in learning more about your courses.",
+    tooltipEn: 'Chat with us on WhatsApp',
+    tooltipHa: 'Tattauna da mu a WhatsApp',
+  },
+  telegram: {
+    url: 'https://t.me/Alhudadigitalacademy',
+    tooltipEn: 'Chat with us on Telegram',
+    tooltipHa: 'Tattauna da mu a Telegram',
+  },
+};
+
