@@ -19,11 +19,9 @@ export default function ContactForm() {
   const [dbError, setDbError] = useState<string | null>(null);
 
   // Live Formspree configuration state
-  const [formspreeId, setFormspreeId] = useState(() => {
+  const [formspreeId] = useState(() => {
     return localStorage.getItem('alhuda_formspree_id') || import.meta.env.VITE_FORMSPREE_FORM_ID || 'xwvddlya';
   });
-  const [showSettings, setShowSettings] = useState(false);
-  const [savedSettingsMsg, setSavedSettingsMsg] = useState(false);
   const [lastFormspreeStatus, setLastFormspreeStatus] = useState<{
     success: boolean;
     errorMsg: string;
@@ -321,60 +319,6 @@ export default function ContactForm() {
                   </>
                 )}
               </button>
-
-              {/* Formspree Settings Toggle */}
-              <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
-                <span>
-                  Formspree Integration:{" "}
-                  <strong className={formspreeId.includes('@') ? "text-amber-600 bg-amber-50 px-2 py-0.5 rounded" : "text-teal-600 bg-teal-50 px-2 py-0.5 rounded"}>
-                    {formspreeId.includes('@') ? "Email Fallback" : "Connected (Form ID)"}
-                  </strong>
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setShowSettings(!showSettings)}
-                  className="text-teal-600 hover:text-teal-800 font-bold hover:underline cursor-pointer"
-                >
-                  {showSettings ? "Hide Setup" : "Configure Formspree"}
-                </button>
-              </div>
-
-              {showSettings && (
-                <div className="p-4 bg-white border border-slate-200 rounded-xl space-y-3 mt-4 animate-fade-in text-left shadow-sm">
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-slate-700 uppercase">Connect to Formspree</h4>
-                    <p className="text-[11px] text-slate-500 font-medium leading-relaxed">
-                      Enter your Formspree Form ID to receive immediate email alerts when visitors submit inquiries.
-                    </p>
-                  </div>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="e.g. xbjnqgdj"
-                      value={formspreeId}
-                      onChange={(e) => setFormspreeId(e.target.value.trim())}
-                      className="flex-1 bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-brand-emerald"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        localStorage.setItem('alhuda_formspree_id', formspreeId);
-                        setSavedSettingsMsg(true);
-                        setTimeout(() => setSavedSettingsMsg(false), 3000);
-                      }}
-                      className="bg-brand-emerald hover:bg-brand-gold text-white font-bold text-xs px-4 py-1.5 rounded-lg transition"
-                    >
-                      Save ID
-                    </button>
-                  </div>
-                  {savedSettingsMsg && (
-                    <p className="text-[11px] text-teal-600 font-bold">✓ Formspree Form ID saved locally!</p>
-                  )}
-                  <p className="text-[10px] text-slate-400 font-medium">
-                    Don't have an ID? Create a free form at <a href="https://formspree.io" target="_blank" rel="noreferrer" className="underline text-teal-600 font-bold">formspree.io</a> and copy the 8-character ID from the form's dashboard.
-                  </p>
-                </div>
-              )}
             </form>
 
           </div>
