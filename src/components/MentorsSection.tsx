@@ -96,8 +96,8 @@ const MENTORS_DATA: Mentor[] = [
       en: 'A highly experienced professional graphic designer specializing in advanced typographic compositions, color theories, and brand identity projects.',
       ha: 'Kwararren mai zane mai zurfin kwarewa a fannin tsara hotuna, zabar kalar alama, da zane-zane na tallace-tallace.'
     },
-    photoUrl: 'https://lh3.googleusercontent.com/d/1w6hT-d5PP1LX6afXn4pkDWn-4hfErj3R',
-    imageClass: 'object-contain object-top scale-[1.65] origin-top bg-white group-hover:scale-[1.73] transition duration-500',
+    photoUrl: 'https://lh3.googleusercontent.com/d/1sB-jzHSoHL7fSWZD6uFqJyAJBeCzcNNA',
+    imageClass: 'object-cover object-[center_top] group-hover:scale-105 transition duration-500',
     skills: {
       en: ['Graphic Design', 'Branding', 'Creative Design', 'Visual Communication'],
       ha: ['Zane da Waya', 'Branding', 'Zane Mai Kyau', 'Sadarwar Hoto']
@@ -124,7 +124,8 @@ const MENTORS_DATA: Mentor[] = [
       en: 'A skilled Graphic Designer, Branding Specialist, and Creative Visual Designer passionate about creating impactful designs and supporting the growth of Al-Huda Digital Academy through creativity, innovation, and teamwork.',
       ha: 'Kwararren mai zane da branding, mai matukar sha\'awar samar da kyawawan hotunan talla da goyon bayan bunkasar Al-Huda Digital Academy ta hanyar kirkire-kirkire.'
     },
-    photoUrl: 'https://lh3.googleusercontent.com/d/1sB-jzHSoHL7fSWZD6uFqJyAJBeCzcNNA',
+    photoUrl: 'https://lh3.googleusercontent.com/d/1KBoMWoyX0C3OiRdvWQ5bWlZ46FDD-qWb',
+    imageClass: 'object-cover object-[center_top] group-hover:scale-105 transition duration-500',
     skills: {
       en: ['Graphic Design', 'Branding', 'Visual Design', 'Teamwork'],
       ha: ['Zane da Waya', 'Branding', 'Zane Mai Kyau', 'Aikin Kungiya']
