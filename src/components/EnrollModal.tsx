@@ -134,20 +134,20 @@ Please guide me through the registration process. Thank you.`;
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 overflow-hidden">
+          <div className="flex items-center gap-4.5 sm:gap-6">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white/10 flex items-center justify-center border border-white/20 overflow-hidden shrink-0 shadow-lg backdrop-blur-sm">
               <img 
                 src={getDirectDriveUrl(LOGO_URL)} 
                 alt="Al-Huda Digital Academy Logo" 
-                className="w-full h-full object-contain p-1"
+                className="w-full h-full object-contain p-2"
                 referrerPolicy="no-referrer"
               />
             </div>
-            <div>
-              <h2 className="text-xl font-heading font-extrabold tracking-tight">
+            <div className="space-y-1">
+              <h2 className="text-xl sm:text-2xl font-heading font-extrabold tracking-tight leading-tight">
                 {language === 'en' ? 'Student Enrollment' : 'Rijistar Dalibai'}
               </h2>
-              <p className="text-xs text-emerald-300 font-medium">
+              <p className="text-xs sm:text-sm text-emerald-300 font-semibold tracking-wide">
                 {language === 'en' 
                   ? 'Batch 01 • Secure Academy Portal'
                   : 'Rukuni 01 • Amintaccen Shafi'
