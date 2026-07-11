@@ -31,8 +31,8 @@ const MENTORS_DATA: Mentor[] = [
     id: 1,
     name: 'Adam Salihu Adam',
     role: {
-      en: 'Founder, Al-Huda Digital Academy',
-      ha: 'Wanda Ya Kafa, Al-Huda Digital Academy'
+      en: 'Founder & Chief Executive Officer (CEO)',
+      ha: "Wanda Ya Kafa & Babban Jami'i Mai Gudanarwa (CEO)"
     },
     expertise: {
       en: 'Professional Graphic Designer, Video Editor & Freelancer',
@@ -58,8 +58,8 @@ const MENTORS_DATA: Mentor[] = [
     id: 2,
     name: 'Bala Sadiq',
     role: {
-      en: 'Co-founder',
-      ha: 'Abokin Hadin Gwiwa'
+      en: 'Co-Founder & Editorial & Community Lead',
+      ha: "Abokin Hadin Gwiwa & Jagoran Edita & Al'umma"
     },
     expertise: {
       en: 'Professional Graphic Designer & Freelancer',
@@ -85,8 +85,8 @@ const MENTORS_DATA: Mentor[] = [
     id: 3,
     name: 'ADEYEMI RIDWAN',
     role: {
-      en: 'Co-founder',
-      ha: 'Abokin Hadin Gwiwa'
+      en: 'Co-Founder & Media/Marketing Lead',
+      ha: 'Abokin Hadin Gwiwa & Jagoran Yada Labarai/Talla'
     },
     expertise: {
       en: 'Professional Graphic Designer',
@@ -113,8 +113,8 @@ const MENTORS_DATA: Mentor[] = [
     id: 4,
     name: 'Agyiri Timothy',
     role: {
-      en: 'Co-Founder',
-      ha: 'Abokin Hadin Gwiwa'
+      en: 'Co-Founder & Creative Design Lead',
+      ha: 'Abokin Hadin Gwiwa & Jagoran Tsara Zane'
     },
     expertise: {
       en: 'Graphic Designer & Branding Specialist',
@@ -234,13 +234,13 @@ export default function MentorsSection() {
               {/* Card Body */}
               <div className="p-4 sm:p-5 flex flex-col flex-grow">
                 {/* Meta details */}
-                <div className="mb-3">
+                <div className="mb-3 flex flex-col items-start gap-1.5">
                   <h3 className="text-base font-heading font-extrabold text-slate-800 leading-snug group-hover:text-brand-emerald transition duration-200">
                     {mentor.name}
                   </h3>
-                  <p className="text-[11px] font-bold text-brand-gold mt-0.5">
+                  <div className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-brand-emerald border border-emerald-100/80 shadow-sm leading-normal">
                     {mentor.role[activeLang]}
-                  </p>
+                  </div>
                 </div>
 
                 {/* Core Expertise label */}
