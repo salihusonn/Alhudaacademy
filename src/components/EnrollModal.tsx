@@ -15,6 +15,19 @@ interface EnrollModalProps {
   preSelectedCourseId?: string;
 }
 
+const LOGO_URL = 'https://drive.google.com/file/d/1DpUwcExv7xtTrXKcVMxoXVKAarqePB_H/view?usp=drivesdk';
+
+// Helper to convert Google Drive sharing link to a direct image URL
+const getDirectDriveUrl = (url: string) => {
+  if (url.includes('drive.google.com/file/d/')) {
+    const id = url.split('/file/d/')[1]?.split('/')[0];
+    if (id) {
+      return `https://lh3.googleusercontent.com/d/${id}`;
+    }
+  }
+  return url;
+};
+
 export default function EnrollModal({ isOpen, onClose, preSelectedCourseId }: EnrollModalProps) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
@@ -122,8 +135,13 @@ Please guide me through the registration process. Thank you.`;
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20">
-              <GraduationCap className="w-6 h-6 text-brand-gold-light" />
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 overflow-hidden">
+              <img 
+                src={getDirectDriveUrl(LOGO_URL)} 
+                alt="Al-Huda Digital Academy Logo" 
+                className="w-full h-full object-contain p-1"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
               <h2 className="text-xl font-heading font-extrabold tracking-tight">
@@ -131,8 +149,8 @@ Please guide me through the registration process. Thank you.`;
               </h2>
               <p className="text-xs text-emerald-300 font-medium">
                 {language === 'en' 
-                  ? `Batch 0${CURRENT_BATCH.batchNumber} • Secure Academy Portal`
-                  : `Rukuni 0${CURRENT_BATCH.batchNumber} • Amintaccen Shafi`
+                  ? 'Batch 01 • Secure Academy Portal'
+                  : 'Rukuni 01 • Amintaccen Shafi'
                 }
               </p>
             </div>
