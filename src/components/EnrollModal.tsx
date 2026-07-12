@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { X, User, Phone, BookOpen, Sparkles, GraduationCap, ArrowRight } from 'lucide-react';
+import { X, User, Phone, BookOpen, Sparkles, GraduationCap, ArrowRight, Globe } from 'lucide-react';
 import { COURSES, CURRENT_BATCH } from '../data/academyData';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useLanguage } from '../lib/LanguageContext';
@@ -33,12 +33,13 @@ export default function EnrollModal({ isOpen, onClose, preSelectedCourseId }: En
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
+    learningLanguage: 'English',
   });
 
   // Track the selected course object
   const selectedCourse = COURSES.find(c => c.id === preSelectedCourseId) || COURSES[0];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -55,14 +56,15 @@ export default function EnrollModal({ isOpen, onClose, preSelectedCourseId }: En
 
     const courseName = selectedCourse.title;
 
-    // Build the pre-filled WhatsApp message
-    const message = `Hello, I would like to enroll in a course at Al-Huda Digital Academy.
+    // Build the pre-filled WhatsApp message as specified by the user
+    const message = `Hello, I would like to enroll in Al-Huda Digital Academy.
 
 Name: ${formData.fullName.trim()}
-Phone Number: ${formData.phone.trim()}
+Phone: ${formData.phone.trim()}
 Course: ${courseName}
+Preferred Learning Language: ${formData.learningLanguage}
 
-Please guide me through the registration process. Thank you.`;
+I am ready to begin my enrollment.`;
 
     const whatsappUrl = `https://wa.me/2349028149646?text=${encodeURIComponent(message)}`;
 
@@ -96,6 +98,7 @@ Please guide me through the registration process. Thank you.`;
         fullName: formData.fullName.trim(),
         phone: formData.phone.trim(),
         courseTitle: courseName,
+        learningLanguage: formData.learningLanguage,
         date: new Date().toLocaleDateString(),
       });
       localStorage.setItem('alhuda_enrollments', JSON.stringify(existingEnrollments));
@@ -113,6 +116,7 @@ Please guide me through the registration process. Thank you.`;
     setFormData({
       fullName: '',
       phone: '',
+      learningLanguage: 'English',
     });
   };
 
@@ -182,7 +186,7 @@ Please guide me through the registration process. Thank you.`;
                   type="text"
                   name="fullName"
                   required
-                  placeholder={language === 'en' ? 'e.g. Yusuf Ibrahim' : 'Misali: Yusuf Ibrahim'}
+                  placeholder={language === 'en' ? 'e.g. Adam s Adam' : 'Misali: Adam s Adam'}
                   value={formData.fullName}
                   onChange={handleInputChange}
                   className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition"
@@ -227,6 +231,33 @@ Please guide me through the registration process. Thank you.`;
                   value={selectedCourse?.title || ''}
                   className="w-full bg-slate-100 border border-slate-200 text-slate-500 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none cursor-not-allowed select-none font-medium"
                 />
+              </div>
+            </div>
+
+            {/* Preferred Learning Language */}
+            <div className="space-y-1.5">
+              <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                {language === 'en' ? 'Preferred Learning Language' : 'Harshen Karatu Da Aka Zaba'} <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                  <Globe className="w-4.5 h-4.5 text-slate-400" />
+                </span>
+                <select
+                  name="learningLanguage"
+                  required
+                  value={formData.learningLanguage}
+                  onChange={handleInputChange}
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition appearance-none cursor-pointer font-medium"
+                >
+                  <option value="English">English</option>
+                  <option value="Hausa">Hausa</option>
+                </select>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none">
+                  <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
               </div>
             </div>
 

@@ -459,7 +459,7 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                         <input
                           type="text"
                           required
-                          placeholder={language === 'en' ? 'Yusuf Ibrahim' : 'Misali: Yusuf Ibrahim'}
+                          placeholder={language === 'en' ? 'Adam s Adam' : 'Misali: Adam s Adam'}
                           value={formData.fullName}
                           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                           className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald"

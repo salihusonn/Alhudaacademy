@@ -100,7 +100,7 @@ export const TRANSLATIONS: Record<string, { en: string; ha: string }> = {
   'enroll.secure': { en: 'Secure Academy Portal', ha: 'Amintaccen Dandalin Makaranta' },
   'enroll.notice': { en: 'Admissions are live! Register your details below to activate your premium digital course seat.', ha: 'Gurbi yana bude yanzu! Shigar da bayananku don tabbatar da mazaunin ku a cikin aji.' },
   'enroll.name': { en: 'Full Name *', ha: 'Cikakken Suna *' },
-  'enroll.namePlaceholder': { en: 'e.g. Yusuf Ibrahim', ha: 'Misali: Yusuf Ibrahim' },
+  'enroll.namePlaceholder': { en: 'e.g. Adam s Adam', ha: 'Misali: Adam s Adam' },
   'enroll.phone': { en: 'Phone Number (WhatsApp) *', ha: 'Lambar Waya (WhatsApp) *' },
   'enroll.phonePlaceholder': { en: 'e.g. +234 803 123 4567', ha: 'Misali: +234 803 123 4567' },
   'enroll.course': { en: 'Course Name', ha: 'Sunan Kwas' },
