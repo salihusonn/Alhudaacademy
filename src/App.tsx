@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Benefits from './components/Benefits';
+import DeviceLearning from './components/DeviceLearning';
 import CourseDirectory from './components/CourseDirectory';
 import MentorsSection from './components/MentorsSection';
 import HowItWorks from './components/HowItWorks';
@@ -76,6 +77,9 @@ export default function App() {
 
         {/* Benefits & Guarantees ("Why Us") */}
         <Benefits />
+
+        {/* Learn on Any Device Feature Section */}
+        <DeviceLearning />
 
         {/* Course Catalog Directory */}
         <CourseDirectory onEnrollClick={handleEnrollClick} />
