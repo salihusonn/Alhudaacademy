@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { X, User, Phone, BookOpen, Sparkles, GraduationCap, ArrowRight, Globe } from 'lucide-react';
+import { X } from 'lucide-react';
 import { COURSES, CURRENT_BATCH } from '../data/academyData';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useLanguage } from '../lib/LanguageContext';
@@ -164,7 +164,6 @@ I am ready to begin my enrollment.`;
         <div className="p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="p-3.5 bg-amber-50 border border-amber-100 rounded-2xl flex items-start gap-3 text-slate-700">
-              <Sparkles className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
               <p className="text-[11px] font-semibold leading-normal">
                 {language === 'en'
                   ? 'Admissions are live! Register your details below to activate your premium digital course seat.'
@@ -179,9 +178,6 @@ I am ready to begin my enrollment.`;
                 {language === 'en' ? 'Full Name' : 'Cikakken Suna'} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                  <User className="w-4.5 h-4.5 text-slate-400" />
-                </span>
                 <input
                   type="text"
                   name="fullName"
@@ -189,7 +185,7 @@ I am ready to begin my enrollment.`;
                   placeholder={language === 'en' ? 'e.g. Adam s Adam' : 'Misali: Adam s Adam'}
                   value={formData.fullName}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition"
                 />
               </div>
             </div>
@@ -200,9 +196,6 @@ I am ready to begin my enrollment.`;
                 {language === 'en' ? 'Phone Number (WhatsApp)' : 'Lambar Waya (WhatsApp)'} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                  <Phone className="w-4.5 h-4.5 text-slate-400" />
-                </span>
                 <input
                   type="tel"
                   name="phone"
@@ -210,7 +203,7 @@ I am ready to begin my enrollment.`;
                   placeholder="e.g. +234 803 123 4567"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition"
                 />
               </div>
             </div>
@@ -221,15 +214,12 @@ I am ready to begin my enrollment.`;
                 {language === 'en' ? 'Course Name' : 'Sunan Kwas'}
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                  <BookOpen className="w-4.5 h-4.5 text-slate-400" />
-                </span>
                 <input
                   type="text"
                   name="courseName"
                   readOnly
                   value={selectedCourse?.title || ''}
-                  className="w-full bg-slate-100 border border-slate-200 text-slate-500 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none cursor-not-allowed select-none font-medium"
+                  className="w-full bg-slate-100 border border-slate-200 text-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none cursor-not-allowed select-none font-medium"
                 />
               </div>
             </div>
@@ -240,15 +230,12 @@ I am ready to begin my enrollment.`;
                 {language === 'en' ? 'Preferred Learning Language' : 'Harshen Karatu Da Aka Zaba'} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                  <Globe className="w-4.5 h-4.5 text-slate-400" />
-                </span>
                 <select
                   name="learningLanguage"
                   required
                   value={formData.learningLanguage}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition appearance-none cursor-pointer font-medium"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-4 pr-10 py-3 text-sm focus:outline-none focus:border-brand-emerald focus:bg-white transition appearance-none cursor-pointer font-medium"
                 >
                   <option value="English">English</option>
                   <option value="Hausa">Hausa</option>
@@ -275,7 +262,6 @@ I am ready to begin my enrollment.`;
                 className="flex-1 bg-brand-emerald hover:bg-teal-900 text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg hover:scale-[1.01] transition duration-200 flex items-center justify-center gap-2 cursor-pointer text-sm"
               >
                 <span>{language === 'en' ? 'Enroll' : 'Yi Rajista'}</span>
-                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </form>

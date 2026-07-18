@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Search, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { FAQS_EN, FAQS_HA } from '../data/translations';
 
@@ -44,7 +44,6 @@ export default function FAQSection() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-            <HelpCircle className="w-3.5 h-3.5 text-brand-gold-light" />
             <span>{language === 'en' ? 'Answers to your Queries' : 'Amsoshin Tambayoyinku'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
@@ -92,9 +91,8 @@ export default function FAQSection() {
               placeholder={language === 'en' ? 'Search FAQs...' : 'Nemi Tambayoyi...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs focus:outline-none focus:border-brand-emerald transition"
+              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-brand-emerald transition"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
         </div>
 

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Sparkles, Linkedin, Twitter, Globe, Award, BookOpen, MessageSquare, Facebook } from 'lucide-react';
+import { Linkedin, Twitter, Globe, Facebook } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/LanguageContext';
 
@@ -159,7 +159,6 @@ export default function MentorsSection() {
           className="text-center max-w-2xl mx-auto space-y-4 mb-16"
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
             <span>{language === 'en' ? 'Academy Leadership' : 'Jagorancin Academy'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
@@ -219,7 +218,6 @@ export default function MentorsSection() {
                   className="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-emerald-800 to-teal-900 text-white"
                   style={{ display: 'none' }}
                 >
-                  <Award className="w-12 h-12 text-brand-gold animate-pulse mb-1.5" />
                   <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-200">Al-Huda Expert</span>
                 </div>
 
@@ -245,7 +243,6 @@ export default function MentorsSection() {
 
                 {/* Core Expertise label */}
                 <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-3 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
-                  <BookOpen className="w-3 h-3 text-brand-emerald flex-shrink-0" />
                   <span className="truncate">{mentor.expertise[activeLang]}</span>
                 </div>
 

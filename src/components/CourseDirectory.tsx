@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Search, Star, Clock, BookOpen, User, ArrowRight, X, Check, Award, Sparkles, Send } from 'lucide-react';
+import { X } from 'lucide-react';
 import { CURRENT_BATCH } from '../data/academyData';
 import { Course } from '../types';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -115,7 +115,6 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-brand-gold-light" />
               <span>{language === 'en' ? 'Explore Course Directory' : 'Katalof na Kwasa-kwasai'}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight leading-none">
@@ -144,9 +143,8 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
               placeholder={language === 'en' ? 'Search courses or tools...' : 'Nemi kwasa-kwasai ko kayan aiki...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-brand-emerald transition shadow-sm"
+              className="w-full bg-white border border-slate-200 text-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-emerald transition shadow-sm"
             />
-            <Search className="w-4.5 h-4.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           </div>
         </div>
 
@@ -198,7 +196,6 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
 
                   {/* Level Tag */}
                   <span className="absolute bottom-4 left-4 text-xs font-bold text-white flex items-center gap-1">
-                    <Award className="w-4 h-4 text-brand-gold-light" />
                     <span>
                       {course.level === 'Beginner' 
                         ? (language === 'en' ? 'Beginner' : 'Masu Fara Koyo')
@@ -215,7 +212,6 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     {/* Rating and Enrolled */}
                     <div className="flex items-center justify-between text-xs text-slate-400 font-bold">
                       <div className="flex items-center gap-1.5">
-                        <Star className="w-4 h-4 fill-brand-gold-light text-brand-gold-light" />
                         <span className="text-slate-700 font-extrabold">{course.rating}</span>
                         <span>({language === 'en' ? '1 Review' : 'Ra\'ayi 1'})</span>
                       </div>
@@ -234,11 +230,9 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   {/* Course Details Pills */}
                   <div className="flex items-center gap-4 text-xs font-bold text-slate-500 border-t border-slate-100 pt-4">
                     <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-slate-400" />
                       <span>{course.duration}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <BookOpen className="w-4 h-4 text-slate-400" />
                       <span>{course.lessons} {language === 'en' ? 'Lectures' : 'Darussa'}</span>
                     </div>
                   </div>
@@ -378,13 +372,11 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                   {/* Outcomes checklist */}
                   <div className="space-y-3 bg-teal-50/40 border border-teal-50 p-5 rounded-2xl">
                     <h4 className="font-heading font-extrabold text-brand-emerald text-sm flex items-center gap-1.5">
-                      <Award className="w-4 h-4 text-brand-gold-light" />
                       <span>{language === 'en' ? 'What you will be able to do:' : 'Abubuwan da zaka iya yi:'}</span>
                     </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600 font-semibold">
                       {selectedCourse.outcomes.map((outcome, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <Check className="w-4 h-4 text-brand-emerald shrink-0 mt-0.5" />
                           <span>{outcome}</span>
                         </li>
                       ))}
@@ -531,16 +523,12 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                           className="flex-1 bg-brand-emerald text-white font-bold py-3 px-4 rounded-xl shadow-md hover:bg-brand-gold transition cursor-pointer flex items-center justify-center gap-2 text-sm"
                         >
                           <span>{language === 'en' ? 'Submit Application' : 'Aika Rajista'}</span>
-                          <Send className="w-4 h-4" />
                         </button>
                       </div>
                     </form>
                   ) : (
                     /* Successful application State */
                     <div className="py-8 text-center space-y-4 max-w-md mx-auto animate-fade-in">
-                      <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald flex items-center justify-center mx-auto shadow-md">
-                        <Check className="w-8 h-8 stroke-[3]" />
-                      </div>
                       <h4 className="font-heading font-extrabold text-slate-800 text-xl">
                         {language === 'en' ? 'Application Received Successfully!' : 'An Karbi Rajistarka Cikin Nasara!'}
                       </h4>
@@ -600,7 +588,6 @@ export default function CourseDirectory({ onEnrollClick }: CourseDirectoryProps)
                     className="w-full sm:w-auto bg-brand-emerald text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md hover:bg-brand-gold transition cursor-pointer flex items-center justify-center gap-1.5"
                   >
                     <span>{language === 'en' ? 'Proceed to Application' : 'Ci gaba da Rajista'}</span>
-                    <ArrowRight className="w-4 h-4" />
                   </button>
                 ) : (
                   <button

@@ -4,21 +4,10 @@
  */
 
 import React from 'react';
-import { Award, Laptop, Users, Calendar, ShieldCheck, HeartHandshake, Briefcase, Sparkles } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 
 export default function Benefits() {
   const { benefits, language, t } = useLanguage();
-
-  const getBenefitIcon = (id: string) => {
-    switch (id) {
-      case 'b1': return <Laptop className="w-6 h-6 text-brand-emerald" />;
-      case 'b2': return <Users className="w-6 h-6 text-brand-emerald" />;
-      case 'b3': return <Briefcase className="w-6 h-6 text-brand-emerald" />;
-      case 'b4': return <ShieldCheck className="w-6 h-6 text-brand-emerald" />;
-      default: return <Sparkles className="w-6 h-6 text-brand-emerald" />;
-    }
-  };
 
   return (
     <section id="why-us" className="py-20 md:py-28 bg-white relative">
@@ -30,7 +19,6 @@ export default function Benefits() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24 pb-16 border-b border-slate-100">
           <div className="lg:col-span-5 space-y-5 text-center lg:text-left">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-brand-gold" />
               <span>{language === 'en' ? 'About Our Academy' : 'Game da Makarantarmu'}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight leading-tight">
@@ -95,7 +83,6 @@ export default function Benefits() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-brand-gold-light" />
             <span>{language === 'en' ? 'Why Al-Huda Digital Academy' : 'Me yasa Zaka Zabi Al-Huda Digital Academy'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight leading-tight">
@@ -125,11 +112,6 @@ export default function Benefits() {
               className="bg-slate-50/50 hover:bg-white rounded-2xl p-6 border border-slate-100/70 hover:border-emerald-100 shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 transition duration-300 group flex flex-col justify-between"
             >
               <div className="space-y-4">
-                {/* Icon Container */}
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center group-hover:bg-brand-emerald group-hover:text-white transition duration-300">
-                  {getBenefitIcon(benefit.id)}
-                </div>
-                
                 <h3 className="font-heading font-extrabold text-slate-800 text-lg group-hover:text-brand-emerald transition">
                   {benefit.title}
                 </h3>

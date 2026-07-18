@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { GraduationCap, Mail, Sparkles, Send, Check, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import AlHudaLogo from './AlHudaLogo';
 
@@ -49,7 +49,6 @@ export default function Footer({ onNavigate }: FooterProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 space-y-2">
             <span className="text-brand-gold-light text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 justify-center lg:justify-start">
-              <Sparkles className="w-3.5 h-3.5" />
               <span>{language === 'en' ? 'Stay Updated with Al-Huda' : 'Kasance da Al-Huda'}</span>
             </span>
             <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-white text-center lg:text-left">
@@ -79,12 +78,10 @@ export default function Footer({ onNavigate }: FooterProps) {
                   className="bg-brand-emerald hover:bg-brand-gold text-white font-bold px-6 py-3 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shrink-0 cursor-pointer text-sm"
                 >
                   <span>{language === 'en' ? 'Subscribe' : 'Yi Rajista'}</span>
-                  <Send className="w-4 h-4" />
                 </button>
               </form>
             ) : (
               <div className="flex items-center gap-2 bg-teal-950/40 border border-teal-900 text-brand-emerald-light p-4 rounded-2xl max-w-md mx-auto lg:mr-0 justify-center animate-fade-in text-xs font-bold">
-                <Check className="w-4.5 h-4.5" />
                 <span>
                   {language === 'en' 
                     ? 'Subscription Saved! Check inbox for free guide material.' 

@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, GraduationCap, ChevronDown, Calendar, Sparkles, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { CURRENT_BATCH } from '../data/academyData';
 import AlHudaLogo from './AlHudaLogo';
 import { useLanguage } from '../lib/LanguageContext';
@@ -35,6 +35,7 @@ export default function Header({ onNavigate, activeSection, onEnrollClick }: Hea
   const navItems = [
     { labelKey: 'nav.home', id: 'home' },
     { labelKey: 'nav.courses', id: 'courses' },
+    { labelKey: 'nav.freeMasterclass', id: 'free-masterclass' },
     { labelKey: 'nav.whyUs', id: 'why-us' },
     { labelKey: 'nav.mentors', id: 'mentors' },
     { labelKey: 'nav.howItWorks', id: 'how-it-works' },

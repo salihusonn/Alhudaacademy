@@ -4,6 +4,7 @@ export const TRANSLATIONS: Record<string, { en: string; ha: string }> = {
   // Navigation Menu
   'nav.home': { en: 'Home', ha: 'Gida' },
   'nav.courses': { en: 'Courses', ha: 'Kwasa-kwasai' },
+  'nav.freeMasterclass': { en: 'Free Masterclass', ha: 'Kyauta Masterclass' },
   'nav.whyUs': { en: 'Why Us', ha: 'Me yasa Mu?' },
   'nav.mentors': { en: 'Mentors', ha: 'Malamai' },
   'nav.howItWorks': { en: 'How It Works', ha: 'Yadda Yake Aiki' },

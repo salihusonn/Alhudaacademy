@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import { Smartphone, Laptop, Wifi, Award, Sparkles } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 
 export default function DeviceLearning() {
@@ -12,28 +11,24 @@ export default function DeviceLearning() {
 
   const features = [
     {
-      icon: <Smartphone className="w-6 h-6 text-brand-emerald" />,
       title: language === 'en' ? 'Smartphone-Friendly Learning' : 'Koyo Mai Sauki A Waya',
       description: language === 'en' 
         ? 'Access all lessons and assignments on your smartphone.'
         : 'Samun damar duba dukkan darussa da ayyuka a kan wayar ku ta salula.',
     },
     {
-      icon: <Laptop className="w-6 h-6 text-brand-emerald" />,
       title: language === 'en' ? 'Computer Compatibility' : 'Daidaito Da Kwamfuta',
       description: language === 'en'
         ? 'Learn seamlessly on desktop or laptop computers.'
         : 'Koyi karatu ba tare da wata matsala ba a kan kwamfyutar tafi-da-gidanka ko ta kan tebur.',
     },
     {
-      icon: <Wifi className="w-6 h-6 text-brand-emerald" />,
       title: language === 'en' ? 'Flexible Online Access' : 'Saukin Shiga Ta Yanar Gizo',
       description: language === 'en'
         ? 'Study from home or anywhere with an internet connection.'
         : 'Yi karatu daga gida ko kuma a kowane wuri muddin kuna da intanet.',
     },
     {
-      icon: <Award className="w-6 h-6 text-brand-emerald" />,
       title: language === 'en' ? 'Practical, Hands-On Training' : 'Horarwa Ta Zahiri',
       description: language === 'en'
         ? 'Build real-world skills through projects and guided exercises.'
@@ -51,7 +46,6 @@ export default function DeviceLearning() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-brand-gold-light" />
             <span>{language === 'en' ? 'Learn Anywhere' : 'Koyi a Kowani Wuri'}</span>
           </div>
           
@@ -83,13 +77,6 @@ export default function DeviceLearning() {
               className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group flex flex-col justify-between"
             >
               <div className="space-y-4">
-                {/* Icon Container with gold brand color on hover */}
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center group-hover:bg-brand-emerald group-hover:text-white transition duration-300">
-                  {React.cloneElement(feature.icon, {
-                    className: 'w-6 h-6 text-brand-emerald group-hover:text-white transition duration-300'
-                  })}
-                </div>
-                
                 <h3 className="font-heading font-extrabold text-slate-800 text-base leading-snug group-hover:text-brand-emerald transition">
                   {feature.title}
                 </h3>

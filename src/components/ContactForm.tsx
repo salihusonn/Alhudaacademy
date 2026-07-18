@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, MessageSquare, Check, Sparkles, Facebook, Twitter, Instagram, Linkedin, Loader2 } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Loader2 } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
@@ -155,7 +155,6 @@ export default function ContactForm() {
           <div className="lg:col-span-5 space-y-8 flex flex-col justify-between">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-brand-emerald text-xs font-bold tracking-wider uppercase">
-                <MessageSquare className="w-3.5 h-3.5 text-brand-gold-light" />
                 <span>{language === 'en' ? 'Get In Touch' : 'Tuntube Mu'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-800 tracking-tight">
@@ -181,9 +180,6 @@ export default function ContactForm() {
             <div className="space-y-4">
               {/* Support Email */}
               <div className="flex gap-4 bg-slate-50 border border-slate-100 p-5 rounded-2xl">
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-brand-emerald flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5" />
-                </div>
                 <div>
                   <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                     {language === 'en' ? 'Support Email' : 'Imel Din Taimako'}
@@ -199,9 +195,6 @@ export default function ContactForm() {
 
               {/* Phone Line */}
               <div className="flex gap-4 bg-slate-50 border border-slate-100 p-5 rounded-2xl">
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-brand-emerald flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
                 <div>
                   <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                     {language === 'en' ? 'Helpline (WhatsApp)' : 'Layin Taimako (WhatsApp)'}
@@ -217,9 +210,6 @@ export default function ContactForm() {
 
               {/* Head Office location */}
               <div className="flex gap-4 bg-slate-50 border border-slate-100 p-5 rounded-2xl">
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-brand-emerald flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
                 <div>
                   <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                     {language === 'en' ? 'Head Office Location' : 'Wurin Babban Ofishi'}
@@ -356,7 +346,6 @@ export default function ContactForm() {
                 ) : (
                   <>
                     <span>{language === 'en' ? 'Send Inquiry Message' : 'Tura Sakon Tambaya'}</span>
-                    <Send className="w-4 h-4" />
                   </>
                 )}
               </button>
@@ -378,14 +367,9 @@ export default function ContactForm() {
             className="bg-white rounded-3xl max-w-md w-full p-8 md:p-10 shadow-2xl border border-slate-100 text-center relative space-y-6 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Elegant Check Badge with brand-emerald (Deep Green) and White colors */}
-            <div className="w-16 h-16 rounded-full bg-teal-50 border-2 border-brand-emerald text-brand-emerald flex items-center justify-center mx-auto shadow-md">
-              <Check className="w-8 h-8 stroke-[3]" />
-            </div>
-
             {/* Success Message Header */}
             <h3 className="font-heading font-extrabold text-slate-800 text-xl sm:text-2xl leading-snug">
-              {language === 'en' ? '✅ Message Sent Successfully!' : '✅ An Tura Sako Cikin Nasara!'}
+              {language === 'en' ? 'Message Sent Successfully!' : 'An Tura Sako Cikin Nasara!'}
             </h3>
 
             {/* Custom Success Body Text */}

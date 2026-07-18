@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
 
 interface CountUpProps {
@@ -84,7 +83,6 @@ export default function Hero({ onNavigate, onEnrollClick }: HeroProps) {
         {/* Decorative Top Accent badge */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-[#075C33] shadow-sm">
-            <Sparkles className="w-4 h-4 text-[#B08922] animate-pulse" />
             <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest">
               {language === 'en' ? 'EMPOWERING THE FUTURE THROUGH DIGITAL SKILLS' : 'INGANTA RAYUWA TA HANYAR FASAHAR DIJITAL'}
             </span>
@@ -137,13 +135,12 @@ export default function Hero({ onNavigate, onEnrollClick }: HeroProps) {
             {t('hero.subtitle')}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
             <button
               onClick={() => onNavigate('courses')}
               className="w-full sm:w-auto bg-[#075C33] hover:bg-[#0d834b] text-white text-sm sm:text-base font-extrabold px-8 py-3.5 rounded-xl shadow-md shadow-emerald-900/10 transition duration-200 hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>{t('hero.cta.browse')}</span>
-              <ArrowRight className="w-4 h-4 text-[#B08922]" />
             </button>
 
             <button
@@ -153,20 +150,25 @@ export default function Hero({ onNavigate, onEnrollClick }: HeroProps) {
             >
               <span>{t('hero.cta.start')}</span>
             </button>
+
+            <button
+              onClick={() => onNavigate('free-masterclass')}
+              className="w-full sm:w-auto border-2 border-[#075C33] text-[#075C33] hover:bg-emerald-50 text-sm sm:text-base font-extrabold px-8 py-3 rounded-xl shadow-xs transition duration-200 hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              id="hero-masterclass-btn"
+            >
+              <span>{language === 'en' ? 'Register for Free Masterclass' : 'Yi Rajistar Masterclass'}</span>
+            </button>
           </div>
 
           {/* Verification highlights */}
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] sm:text-xs font-bold text-slate-400">
             <div className="flex items-center gap-1.5">
-              <CheckCircle className="w-3.5 h-3.5 text-[#B08922] shrink-0" />
               <span>{language === 'en' ? '100% Practical Bootcamps' : '100% Horaswa ta Zahiri'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle className="w-3.5 h-3.5 text-[#B08922] shrink-0" />
               <span>{language === 'en' ? 'Live Practical Projects' : 'Ayyuka na Kai Tsaye'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <CheckCircle className="w-3.5 h-3.5 text-[#B08922] shrink-0" />
               <span>{language === 'en' ? 'Verifiable Certificates' : 'Shaidar Karatu Mai Tabbaci'}</span>
             </div>
           </div>

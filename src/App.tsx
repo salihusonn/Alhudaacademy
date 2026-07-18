@@ -9,6 +9,7 @@ import Hero from './components/Hero';
 import Benefits from './components/Benefits';
 import DeviceLearning from './components/DeviceLearning';
 import CourseDirectory from './components/CourseDirectory';
+import FreeMasterclass from './components/FreeMasterclass';
 import MentorsSection from './components/MentorsSection';
 import HowItWorks from './components/HowItWorks';
 import FAQSection from './components/FAQSection';
@@ -45,7 +46,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'courses', 'why-us', 'mentors', 'how-it-works', 'faq', 'contact'];
+      const sections = ['home', 'courses', 'free-masterclass', 'why-us', 'mentors', 'how-it-works', 'faq', 'contact'];
       const scrollPosition = window.scrollY + 180; // trigger point with margin
 
       for (const section of sections) {
@@ -83,6 +84,9 @@ export default function App() {
 
         {/* Course Catalog Directory */}
         <CourseDirectory onEnrollClick={handleEnrollClick} />
+
+        {/* Free 2-Day Intensive Masterclass Registration Section */}
+        <FreeMasterclass />
 
         {/* Meet Our Mentors */}
         <MentorsSection />
